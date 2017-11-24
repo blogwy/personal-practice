@@ -1,0 +1,28 @@
+<%- include head.ejs %>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 col-md-offset-4">
+            <h2><%= title %>页</h2>
+            <form>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">账号</label>
+                    <input type="text" class="form-control" name="username" id="exampleInputEmail1" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">密码</label>
+                    <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">确认密码</label>
+                    <input type="password" class="form-control" name="confirm" id="confirmPassword1" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-default">注册</button>
+            </form> 
+        </div>
+    </div>   
+</div>
+<script src="/js/jquery.js"></script>
+<script src="/js/layer.js"></script>
+<script src="/js/reg.js"></script>
+<%- include foot.ejs %>
