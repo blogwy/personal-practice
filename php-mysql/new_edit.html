@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>修改新闻</title>
+  <link rel="stylesheet" href="//cdn.bootcss.com/mdui/0.4.0/css/mdui.min.css">
+  <script src="//cdn.bootcss.com/mdui/0.4.0/js/mdui.min.js"></script>
+  <style>
+    .tit{
+      text-align: center;
+    }
+  </style>
+</head>
+<body class="mdui-theme-primary-indigo mdui-theme-accent-pink">
+  <div class="mdui-container-fluid">
+    <h2 class="tit">新闻编辑</h2>
+    <div class="mdui-table-fluid">
+      <form action="news_update.php" method="post">
+        <input type="hidden" name="id" value="<?php echo $new['id']; ?> /">
+        <table class="mdui-table">
+          <tr>
+            <th>标题</th>
+            <td>
+              <div class="mdui-row">
+                <div class="mdui-col-xs-6 mdui-textfield">
+                  <input class="mdui-textfield-input" type="text" name="title" value="<?php echo $new['title']; ?>" />
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>发布者</th>
+            <td>
+              <div class="mdui-row">
+                <div class="mdui-col-xs-3 mdui-textfield">
+                  <input class="mdui-textfield-input" type="text" name="publiser" value="<?php echo $new['publiser']; ?>" />
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>是否置顶</th>
+            <td>
+              <label class="mdui-switch">
+                <input type="checkbox" value="1" name="isTop" <?php echo $new['isTop'] == 1 ? 'checked' : '' ?> />
+                <i class="mdui-switch-icon"></i>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <th>内容</th>
+            <td>
+              <div id="div1">
+                <?php echo $new['content']; ?>
+              </div>
+              <textarea name="content" id="text1" style="display:none">
+                <?php echo $new['content']; ?>
+              </textarea>
+            </td>
+          </tr>
+          <tr>
+            <th>#</th>
+            <td>
+              <input class="mdui-btn mdui-btn-raised mdui-color-theme-accent" value="保存" type="submit" id="btn1" />
+              <input class="mdui-btn mdui-btn-raised mdui-color-indigo" value="返回" type="button" id="btn2" />
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </div>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//unpkg.com/wangeditor/release/wangEditor.min.js"></script>
+  <script type="text/javascript">
+    var E = window.wangEditor
+    var editor = new E('#div1')
+    var $text1 = $('#text1')
+    editor.customConfig.onchange = function (html) {
+        // 监控变化，同步更新到 textarea
+        $text1.val(html)
+    }
+    editor.create()
+    // 初始化 textarea 的值
+    $text1.val(editor.txt.html())
+
+  </script>
+</body>
+</html>

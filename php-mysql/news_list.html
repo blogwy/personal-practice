@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>添加新闻</title>
+  <link rel="stylesheet" href="//cdn.bootcss.com/mdui/0.4.0/css/mdui.min.css">
+  <script src="//cdn.bootcss.com/mdui/0.4.0/js/mdui.min.js"></script>
+</head>
+<body class="mdui-theme-primary-indigo mdui-theme-accent-pink">
+  <div class="mdui-container-fluid">
+    <div class="mdui-row">
+      <div class="mdui-col-xs-5">
+        <div class="mdui-textfield">
+          <i class="mdui-icon material-icons">view_headline</i>
+          <input class="mdui-textfield-input" type="text" placeholder="请输入数据"/>
+        </div>
+      </div>
+      <div class="mdui-textfield mdui-col-xs-2">
+        <button class="mdui-btn mdui-btn-raised mdui-ripple">查询</button>
+        <button id="add" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">添加</button>
+      </div>
+    </div>
+    <div class="mdui-table-fluid">
+      <table class="mdui-table mdui-table-hoverable">
+        <thead>
+          <tr>
+            <th>编号</th>
+            <th>标题</th>
+            <th>发布时间</th>
+            <th>发布人</th>
+            <th>是否置顶</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach($news as $key => $new):?>
+          <tr>
+            <td><?php echo $key +1; ?></td>
+            <td><?php echo $new['title']; ?></td>
+            <td><?php echo date('Y年m月d日 H时i分s秒',$new['pub_time']); ?></td>
+            <td><?php echo $new['publiser']; ?></td>
+            <td><?php echo $new['isTop'] == 1 ? '是' : '否'; ?></td>
+            <td>
+              <a class="mdui-btn mdui-btn-raised mdui-color-theme-accent" href="new_edit.php?id=<?php echo $new['id']; ?>">修改</a>
+              <a id="del" class="mdui-btn mdui-btn-raised mdui-color-indigo" href="new_delete.php?id=<?php echo $new['id']; ?>">删除</a>
+            </td>
+          </tr>
+          <?php endforeach;?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script>
+    document.getElementById('del').onclick = function () {
+      var r = confirm('是否确定删除新闻？');
+      if(r == true){
+        return;
+      }else{
+        return false;
+      }
+    }
+    document.getElementById('add').onclick = function () {
+      location.href = 'news_add.html';
+    }
+  </script>
+</body>
+</html>
