@@ -6,7 +6,7 @@
 ## 相关图片
 1. 无
 2. 
-![img](https://www.blogwy.com/wp-content/uploads/2018/02/2018020707015787.png)
-![img](https://www.blogwy.com/wp-content/uploads/2018/02/2018020707023677.png)
+![img](https://raw.githubusercontent.com/blogwy/personal-practice/master/php-mysql/img/1.png)
+![img](https://raw.githubusercontent.com/blogwy/personal-practice/master/php-mysql/img/2.png)
 
 
