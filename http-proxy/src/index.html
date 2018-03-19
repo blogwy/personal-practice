@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>首页</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <style type="text/css">
+        .hello{
+            color: #428bca;
+        }
+    </style>
+</head>
+<body>
+    <h3>这是index页面</h3>
+ 
+    <span class="hello">你可以点击这里</span>
+ 
+    <script type="text/javascript">
+        $(function(){
+            $('.hello').on('click',function(){
+                $.ajax({
+                    type:'get',
+                    url:'/app/api/search?size=10&sortDirections=desc&word=%25E6%2588%2598%25E7%258B%25BC&from=home&page=0',
+                    success:function(data){
+                        console.log('okokok'+JSON.stringify(data));
+                    },
+                    error:function(data){
+                        console.log('errerrerr'+data);
+                    }
+ 
+                })
+            })
+        })
+    </script>
+ 
+</body>
+</html>
