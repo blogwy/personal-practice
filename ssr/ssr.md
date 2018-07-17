@@ -165,17 +165,21 @@ chmod +x *.sh
 
 ### Windows
 
-[点击下载客户端](https://pan.baidu.com/s/1eTeJWxc) 密码：8xb2
+[点击下载客户端/百度云](https://pan.baidu.com/s/1eTeJWxc) 密码：8xb2
+
+[点击下载客户端/github](https://github.com/blogwy/personal-practice/tree/master/ssr/win/ssr.7z)
 
 ### Android
 
-[点击下载客户端](https://pan.baidu.com/s/1eUhcduM) 密码：9cwq
+[点击下载客户端/百度云](https://pan.baidu.com/s/1eUhcduM) 密码：9cwq
+
+[点击下载客户端/github](https://github.com/blogwy/personal-practice/tree/master/ssr/android/shadowsocksr-3.5.4.apk)
 
 ### iOS
 
 1. 下载 potatso lite（需切换到美区AppStore）
 
-2. 或者到pp助手下载Shadowrocket
+2. 或者到pp助手免费下载Shadowrocket
 
 ## 五、感谢
 感谢 [逗比根据地](https://doub.io/) ，本文相关代码都是从逗比根据地网站上复制的，本人只是做了整合。相关高级操作请关注 [逗比根据地](https://doub.io/) ！
