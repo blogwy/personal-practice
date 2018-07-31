@@ -6,6 +6,7 @@
 4. php-curl: 使用curl做代理（伪造来路 UA IP）
 5. http-proxy: express+http-proxy-middleware代理跨域
 6. MSDN-API: MSDN API
+7. WebSocket Demo
 
 ## 相关图片
 1. 无
@@ -26,5 +27,4 @@
 
 6. [https://github.com/blogwy/personal-practice/blob/master/MSDN-API/msdnAPI.md](https://github.com/blogwy/personal-practice/blob/master/MSDN-API/msdnAPI.md)
 
-
-
+7. websocket文件夹

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>WebSocket 测试面板</title>
+  <link rel="stylesheet" href="http://7xu2yc.com2.z0.glb.clouddn.com/layout.css">
+  <style>
+    .container{
+      margin: 20px 30px;
+      padding: 20px;
+    }
+    .item-grounp{
+      border: 1px solid #9e9e9e;
+    }
+    .item{
+      padding: 10px 5px;
+      border-bottom: 1px solid #9e9e9e;
+    }
+    .item:last-child{
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div style="margin-bottom: 20px;">
+    <button id="sendAll">群发</button>
+  </div>
+  <div class="flex center-center item-grounp" id="itemGrounp">
+  </div>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script>
+  $(function () {
+    let ws = new WebSocket("ws://192.168.0.110:3000");
+    ws.getClientsInfo = function getClientsInfo() {
+      let WsData = JSON.stringify({
+        userName: 'manage',
+        token: 'manage_123456789',
+        used: 'manage'
+      });
+      ws.send(WsData);
+      console.log('数据已经发送');
+      ws.onmessage = function (evt){
+        let msg = JSON.parse(evt.data);
+        console.log(msg);
+        dataToHtml(msg);
+        $('.send').on('click',function (e) {
+          let rst = {
+            userName: e.target.dataset.username,
+            used: 'send'
+          };
+          console.log(rst);
+          ws.send(JSON.stringify(rst));
+          ws.onmessage = function (evt){
+            let msg = evt.data;
+            console.log(msg);
+          };
+        })
+      };
+    };
+    ws.onopen = function () {
+      console.log('Web Socket 已连接');
+      ws.getClientsInfo();
+    }
+    
+    // 群发
+    $('#sendAll').on('click',function () {
+      let msg = {
+        used: 'sendall'
+      }
+      ws.send(JSON.stringify(msg));
+      ws.onmessage = function (evt){
+        let msg = evt.data;
+        console.log(msg);
+        alert('群发成功')
+      };
+    })
+    
+    function dataToHtml(data) {
+      let str = '';
+      data.forEach(function (item,index) {
+        str += `<div class="item flex-12 flex center-center">
+                  <div class="flex-1 text-center">${index+1}</div>
+                  <div class="flex-4 text-center">${item.userName}</div>
+                  <div class="flex-4 text-center">${item.token}</div>
+                  <div class="flex-1 text-center">${item.used}</div>
+                  <div class="flex-2 text-center">
+                    <button class="send" data-username="${item.userName}">发送</button>
+                  </div>
+                </div>`
+      })
+      document.getElementById('itemGrounp').innerHTML = str;
+    }
+  })
+</script>
+</body>
+</html>

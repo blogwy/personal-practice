@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>user</title>
+</head>
+<body>
+<h3>websocket测试</h3>
+<div style="margin-top: 50px">
+  <button id="closed">关闭websocket</button>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script>
+  $(function () {
+    let timestamp = new Date().getTime();
+    let ws = new WebSocket("ws://192.168.0.110:3000");
+    ws.onopen = function () {
+      console.log('Web Socket 已连接');
+      let WsData = JSON.stringify({
+        userName: 'name' + timestamp,
+        token: 'name_' + timestamp,
+        used: 'login'
+      });
+      ws.send(WsData);
+      ws.onmessage = function (evt){
+        let msg = evt.data;
+        console.log(msg);
+        if (msg === 'hello,world!' || msg === '广播消息'){
+          alert(msg)
+        }
+        
+      };
+    }
+    $('#closed').on('click',function () {
+      let WsData = JSON.stringify({
+        userName: 'name' + timestamp,
+        token: 'name_' + timestamp,
+        used: 'logout'
+      });
+      ws.send(WsData);
+      ws.onmessage = function (evt){
+        let msg = evt.data;
+        console.log(msg);
+        ws.close();
+        console.log('Web Socket 已关闭');
+      };
+    })
+  })
+</script>
+</body>
+</html>
