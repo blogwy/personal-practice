@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>在线画框图</title>
+  <link rel="icon" type="image/x-icon" href="http://resources.jointjs.com/demos/rappid/apps/KitchenSink/favicon.ico"/>
+  <link rel="stylesheet" type="text/css" href="./build/rappid.css">
+  <link rel="stylesheet" type="text/css" href="./build/style.css">
+  <link rel="stylesheet" type="text/css" href="./build/theme-picker.css">
+  
+  <!-- theme-specific application CSS  -->
+  <link rel="stylesheet" type="text/css" href="./build/style.dark.css">
+  <link rel="stylesheet" type="text/css" href="./build/style.material.css">
+  <link rel="stylesheet" type="text/css" href="./build/style.modern.css">
+</head>
+<body>
+
+<div id="app">
+  <div class="app-header">
+    <div class="app-title">
+      <h1>在线画框图</h1>
+    </div>
+    <div class="toolbar-container"></div>
+  </div>
+  <div class="app-body">
+    <div class="stencil-container"></div>
+    <div class="paper-container"></div>
+    <div class="inspector-container"></div>
+    <div class="navigator-container"></div>
+  </div>
+</div>
+
+<!-- Rappid/JointJS dependencies: -->
+<script src="./build/jquery.js"></script>
+<script src="./build/index.js"></script>
+<script src="./build/backbone.js"></script>
+<script src="./build/graphlib.core.js"></script>
+<script src="./build/dagre.core.js"></script>
+
+<script src="./build/rappid.js"></script>
+
+<!--[if IE 9]>
+<script>
+  // `-ms-user-select: none` doesn't work in IE9
+  document.onselectstart = function() { return false; };
+</script>
+<![endif]-->
+
+<!-- Application files:  -->
+<script src="./build/halo.js"></script>
+<script src="./build/selection.js"></script>
+<script src="./build/inspector.js"></script>
+<script src="./build/stencil.js"></script>
+<script src="./build/toolbar.js"></script>
+<script src="./build/sample-graphs.js"></script>
+<script src="./build/main.js"></script>
+<script src="./build/theme-picker.js"></script>
+<script src="./build/joint.shapes.app.js"></script>
+<script src="./build/navigator.js"></script>
+
+<script>
+  joint.setTheme('modern');
+  app = new App.MainView({ el: '#app' });
+  themePicker = new App.ThemePicker({ mainView: app });
+  themePicker.render().$el.appendTo(document.body);
+  window.addEventListener('load', function() {
+    app.graph.fromJSON(JSON.parse(App.config.sampleGraphs.emergencyProcedure));
+  });
+</script>
+
+<!-- Local file warning: -->
+<div id="message-fs" style="display: none;">
+  <p>The application was open locally using the file protocol. It is recommended to access it trough a <b>Web server</b>.</p>
+  <p>Please see <a href="README.md">instructions</a>.</p>
+</div>
+<script>
+  (function() {
+    var fs = (document.location.protocol === 'file:');
+    var ff = (navigator.userAgent.toLowerCase().indexOf('firefox') !== -1);
+    if (fs && !ff) {
+      (new joint.ui.Dialog({
+        width: 300,
+        type: 'alert',
+        title: 'Local File',
+        content: $('#message-fs').show()
+      })).open();
+    }
+  })();
+</script>
+
+</body>
+</html>

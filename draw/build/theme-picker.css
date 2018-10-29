@@ -1,0 +1,8 @@
+/*  Toolbar  */
+.joint-theme-picker {
+    position: absolute;
+    bottom: 20px;
+    right: 260px;
+    border-radius: 5px;
+    padding: 3px 1px !important;
+}

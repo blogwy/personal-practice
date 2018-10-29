@@ -1,0 +1,145 @@
+
+/* Dark */
+.joint-app.joint-theme-dark .app-title {
+    background: #383c3f;
+    box-shadow: inset -2px -1px 0px #333;
+}
+
+.joint-app.joint-theme-dark .inspector-container {
+    background: #5e6366;
+}
+
+.joint-paper.joint-theme-dark .port-label {
+    fill: #c6c7e2;
+}
+
+.joint-stencil.joint-theme-dark .joint-element.joint-type-uml rect,
+.joint-stencil.joint-theme-dark .joint-element.joint-type-uml path {
+    stroke: #5e6366;
+}
+
+.joint-select-box.joint-color-palette.joint-theme-dark .select-box-option:nth-child(2):not(.hover) {
+    border: none;
+}
+
+@font-face {
+    font-family: 'toolbar-icons-dark-kitchen-sink';
+    src: url('./../assets/toolbar-icons-dark.woff') format('woff');
+}
+
+.joint-widget.joint-theme-dark[data-name="clear"]:after,
+.joint-widget.joint-theme-dark[data-name="layout"]:after,
+.joint-widget.joint-theme-dark[data-name="print"]:after {
+    font-family: "toolbar-icons-dark-kitchen-sink";
+    font-style: normal;
+    font-weight: normal;
+    display: inline-block;
+    margin: auto;
+    text-align: center;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1em;
+    font-size: 22px;
+}
+
+.joint-widget.joint-theme-dark[data-name="clear"]:after {
+    content: '\e850';
+}
+
+.joint-widget.joint-theme-dark[data-name="layout"]:after {
+    content: '\e853';
+}
+
+.joint-widget.joint-theme-dark[data-name="print"]:after {
+    content: '\e851';
+}
+
+@media screen and (max-width: 1390px) and (min-width: 1280px) {
+    .joint-toolbar.joint-theme-dark div[data-name="zoom-slider"] input,
+    .joint-toolbar.joint-theme-dark label[data-name="zoom-slider-label"] {
+        display: none;
+    }
+
+    .joint-app.joint-theme-dark .toolbar-container button[data-type="zoomIn"],
+    .joint-app.joint-theme-dark .toolbar-container button[data-type="zoomOut"] {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .joint-app.joint-theme-dark .toolbar-container {
+        overflow-y: auto;
+    }
+
+    .joint-toolbar.joint-theme-dark {
+        flex-wrap: wrap;
+    }
+
+    .joint-app.joint-theme-dark .app-title h1 {
+        line-height: 92px;
+    }
+
+    .joint-app.joint-theme-dark .app-body {
+        height: -moz-calc(100% - 92px);
+        height: -webkit-calc(100% - 92px);
+        height: calc(100% - 92px);
+    }
+}
+
+/*  IE  */
+@media screen and (max-width: 1390px) and (min-width: 0\0
+) {
+    .joint-toolbar.joint-theme-dark div[data-name="zoom-slider"] input,
+    .joint-toolbar.joint-theme-dark label[data-name="zoom-slider-label"] {
+        display: none;
+    }
+
+    .joint-app.joint-theme-dark .toolbar-container button[data-type="zoomIn"],
+    .joint-app.joint-theme-dark .toolbar-container button[data-type="zoomOut"] {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 1350px) and (min-width: 0\0
+) {
+    .joint-toolbar.joint-theme-dark div[data-name="zoom-slider"] input,
+    .joint-toolbar.joint-theme-dark label[data-name="zoom-slider-label"] {
+        display: inline-block;
+    }
+
+    .joint-app.joint-theme-dark .toolbar-container button[data-type="zoomIn"],
+    .joint-app.joint-theme-dark .toolbar-container button[data-type="zoomOut"] {
+        display: none;
+    }
+
+    .joint-app.joint-theme-dark .toolbar-container {
+        overflow-y: auto;
+    }
+
+    .joint-toolbar.joint-theme-dark {
+        flex-wrap: wrap; /*  IE 11 */
+    }
+
+    .joint-app.joint-theme-dark .app-title h1 {
+        line-height: 92px;
+    }
+
+    .joint-app.joint-theme-dark .app-body {
+        height: -moz-calc(100% - 92px);
+        height: -webkit-calc(100% - 92px);
+        height: calc(100% - 92px);
+    }
+}
+
+.joint-tool.joint-theme-dark[data-tool-name="source-arrowhead"],
+.joint-tool.joint-theme-dark[data-tool-name="target-arrowhead"],
+.joint-tool.joint-theme-dark[data-tool-name="segments"] rect,
+.joint-tool.joint-theme-dark[data-tool-name="vertices"] circle {
+    fill: white;
+    stroke: black;
+}
+
+.joint-tool.joint-theme-dark[data-tool-name="source-anchor"] rect,
+.joint-tool.joint-theme-dark[data-tool-name="source-anchor"] rect {
+    stroke: white;
+}

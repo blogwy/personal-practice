@@ -1,0 +1,136 @@
+
+/* Modern */
+.joint-theme-picker.joint-theme-modern {
+    border: 1px solid lightgray;
+}
+
+.joint-app.joint-theme-modern .app-title {
+    background: #30d0c6;
+}
+
+.joint-app.joint-theme-modern .inspector-container {
+    background: #383b61;
+}
+
+.joint-widget.joint-theme-modern[data-name="clear"]:after,
+.joint-widget.joint-theme-modern[data-name="layout"]:after,
+.joint-widget.joint-theme-modern[data-name="print"]:after {
+    display: block;
+    width: 31px;
+    height: 31px;
+    content: ' ';
+    background-color: transparent;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-image: url(./toolbar-icons-modern.png);
+}
+
+.joint-widget.joint-theme-modern[data-name="clear"]:after {
+    background-position: 0 -62px;
+}
+
+.joint-widget.joint-theme-modern[data-name="clear"]:hover:after {
+    background-position: -31px -62px;
+}
+
+.joint-widget.joint-theme-modern[data-name="layout"]:after {
+    background-position: 0 -124px;
+}
+
+.joint-widget.joint-theme-modern[data-name="layout"]:hover:after {
+    background-position: -31px -124px;
+}
+
+.joint-widget.joint-theme-modern[data-name="print"]:after {
+    background-position: 0 -248px;
+}
+
+.joint-widget.joint-theme-modern[data-name="print"]:hover:after {
+    background-position: -31px -248px;
+}
+
+.joint-widget.joint-theme-modern[data-name="clear"],
+.joint-widget.joint-theme-modern[data-name="layout"],
+.joint-widget.joint-theme-modern[data-name="print"] {
+    position: relative;
+    top: -1px;
+    border: none;
+    padding: 0;
+}
+
+@media screen and (max-width: 1230px) and (min-width: 1170px) {
+    .joint-toolbar.joint-theme-modern div[data-name="zoom-slider"] input,
+    .joint-toolbar.joint-theme-modern label[data-name="zoom-slider-label"] {
+        display: none;
+    }
+
+    .joint-app.joint-theme-modern .toolbar-container button[data-type="zoomIn"],
+    .joint-app.joint-theme-modern .toolbar-container button[data-type="zoomOut"] {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 1170px) {
+    .joint-app.joint-theme-modern .toolbar-container {
+        overflow-y: auto;
+    }
+
+    .joint-toolbar.joint-theme-modern {
+        flex-wrap: wrap;
+    }
+
+    .joint-app.joint-theme-modern .app-title h1 {
+        line-height: 92px;
+    }
+
+    .joint-app.joint-theme-modern .app-body {
+        height: -moz-calc(100% - 92px);
+        height: -webkit-calc(100% - 92px);
+        height: calc(100% - 92px);
+    }
+}
+
+/*  IE  */
+@media screen and (max-width: 1490px) and (min-width: 0\0
+) {
+    .joint-toolbar.joint-theme-modern div[data-name="zoom-slider"] input,
+    .joint-toolbar.joint-theme-modern label[data-name="zoom-slider-label"] {
+        display: none;
+    }
+
+    .joint-app.joint-theme-modern .toolbar-container button[data-type="zoomIn"],
+    .joint-app.joint-theme-modern .toolbar-container button[data-type="zoomOut"] {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 1380px) and (min-width: 0\0
+) {
+    .joint-toolbar.joint-theme-modern div[data-name="zoom-slider"] input,
+    .joint-toolbar.joint-theme-modern label[data-name="zoom-slider-label"] {
+        display: inline-block;
+    }
+
+    .joint-app.joint-theme-modern .toolbar-container button[data-type="zoomIn"],
+    .joint-app.joint-theme-modern .toolbar-container button[data-type="zoomOut"] {
+        display: none;
+    }
+
+    .joint-app.joint-theme-modern .toolbar-container {
+        overflow-y: auto;
+    }
+
+    .joint-toolbar.joint-theme-modern {
+        flex-wrap: wrap; /*  IE 11 */
+    }
+
+    .joint-app.joint-theme-modern .app-title h1 {
+        line-height: 92px;
+    }
+
+    .joint-app.joint-theme-modern .app-body {
+        height: -moz-calc(100% - 92px);
+        height: -webkit-calc(100% - 92px);
+        height: calc(100% - 92px);
+    }
+}

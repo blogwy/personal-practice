@@ -1,0 +1,201 @@
+@font-face {
+    font-family: 'Roboto Condensed';
+    src: url('http://resources.jointjs.com/demos/rappid/apps/KitchenSink/assets/fonts/Roboto_Condensed/RobotoCondensed-Light.ttf');
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: 'Roboto Condensed';
+    src: url('./RobotoCondensed-Regular.ttf');
+    font-weight: Normal;
+}
+
+@font-face {
+    font-family: 'Roboto Condensed';
+    src: url('./RobotoCondensed-Bold.ttf');
+    font-weight: Bold;
+}
+
+@font-face {
+    font-family: 'Averia Libre';
+    src: url('http://resources.jointjs.com/demos/rappid/apps/KitchenSink/assets/fonts/Averia_Libre/AveriaLibre-Light.ttf');
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: 'Averia Libre';
+    src: url('http://resources.jointjs.com/demos/rappid/apps/KitchenSink/assets/fonts/Averia_Libre/AveriaLibre-Regular.ttf');
+    font-weight: Normal;
+}
+
+@font-face {
+    font-family: 'Averia Libre';
+    src: url('http://resources.jointjs.com/demos/rappid/apps/KitchenSink/assets/fonts/Averia_Libre/AveriaLibre-Bold.ttf');
+    font-weight: Bold;
+}
+
+@font-face {
+    font-family: 'Alegreya Sans';
+    src: url('http://resources.jointjs.com/demos/rappid/apps/KitchenSink/assets/fonts/Alegreya_Sans/AlegreyaSans-Light.ttf');
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: 'Alegreya Sans';
+    src: url('http://resources.jointjs.com/demos/rappid/apps/KitchenSink/assets/fonts/Alegreya_Sans/AlegreyaSans-Regular.ttf');
+    font-weight: Normal;
+}
+
+@font-face {
+    font-family: 'Alegreya Sans';
+    src: url('http://resources.jointjs.com/demos/rappid/apps/KitchenSink/assets/fonts/Alegreya_Sans/AlegreyaSans-Bold.ttf');
+    font-weight: Bold;
+}
+
+html, body, .joint-app {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    -webkit-user-select: none;
+    -moz-user-select: -moz-none;
+    user-select: none;
+    font-family: sans-serif, Arial;
+    overflow: hidden;
+}
+
+.app-header {
+    position: relative;
+    width: 100%;
+}
+
+.app-body {
+    position: relative;
+    height: -moz-calc(100% - 60px);
+    height: -webkit-calc(100% - 60px);
+    height: calc(100% - 60px);
+}
+
+.app-title {
+    display: inline-block;
+    width: 240px;
+    height: 100%;
+    padding: 0;
+}
+
+.app-title > h1 {
+    color: #fff;
+    font-size: 18px;
+    line-height: 60px;
+    text-align: left;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0 0 0 30px;
+}
+
+/*  Paper  */
+.paper-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    left: 240px;
+    right: 240px;
+}
+
+/*  Inspector  */
+.inspector-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 120px; /* navigator height */
+    width: 240px;
+    box-sizing: border-box;
+}
+.object-property[data-property$="/fill"],
+.object-property[data-property$="/stroke"],
+.field[data-field$="/fill"],
+.field[data-field$="/stroke"] {
+    display: inline-block;
+    vertical-align: top;
+    width: 50%;
+}
+
+.joint-select-box.joint-color-palette .select-box-option:nth-child(2):not(.hover) {
+    border: inset;
+    border-width: 1px;
+}
+
+.joint-inspector-select-box-options {
+    width: 190px;
+}
+
+/*  Navigator  */
+.navigator-container {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 240px;
+    height: 120px;
+}
+
+/*  Stencil  */
+.stencil-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 240px;
+    height: 100%;
+}
+
+.joint-stencil .joint-element[data-type="standard.Image"] text,
+.joint-stencil .joint-element[data-type="standard.Cylinder"] text,
+.joint-stencil .joint-element[data-type="devs.Atomic"] .inPorts text,
+.joint-stencil .joint-element[data-type="devs.Atomic"] .outPorts text,
+.joint-stencil .joint-element[data-type="pn.Transition"] text,
+.joint-stencil .joint-element .joint-port text {
+    display: none;
+}
+
+.joint-stencil .joint-element.joint-type-uml rect,
+.joint-stencil .joint-element.joint-type-uml path {
+    stroke: #4a4d6e;
+}
+
+/*  Toolbar  */
+.toolbar-container {
+    display: inline-block;
+    position: absolute;
+    height: 100%;
+    left: 240px;
+    right: 0;
+    box-sizing: border-box;
+}
+
+.toolbar-container .joint-toolbar {
+    width: 100%;
+    height: 100%;
+}
+
+.toolbar-container label {
+    white-space: nowrap;
+}
+
+.toolbar-container button:not(:empty) {
+    padding: 0 4px;
+}
+
+.toolbar-container button.joint-widget[data-type="zoomIn"],
+.toolbar-container button.joint-widget[data-type="zoomOut"] {
+    display: none;
+}
+
+.joint-dialog.joint-lightbox .fg {
+    background-color: #F6F6F6;
+}
