@@ -9,6 +9,8 @@
 7. WebSocket Demo
 8. 在线画线框图(可到处png和svg)
 9. js-utils 常用的javascript工具函数
+10. jquery-ajax-filter 封装jquery Ajax作为ajax过滤器
+11. vue-axios-filter vue axios请求响应过滤器示例
 
 ## 相关图片
 1. 无
@@ -35,3 +37,7 @@
 ![img](https://raw.githubusercontent.com/blogwy/personal-practice/master/draw/build/ph.png)
 
 9. 无
+
+10. 无
+
+11. 无

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script>
+  // jquery本来是有拦截器了叫ajaxPrefilter，但是本人不是很习惯用，
+  // 干脆自己封装把，毕竟自己封装的自己用着顺手。另外建议小程序开发之前也封装一个请求，方法一样。
+  
+  // jquery ajax 封装demo
+  function request(options) {
+    var suffix = 'token=' + localStorage.getItem("token"),
+        prefix,and;
+    if (options.prefix){
+      // 是否加前缀
+      prefix = '/prefix'
+    }else {
+      prefix = ''
+    }
+    if (options.suffix){
+      // 是否加后缀，这里演示加token
+      if ((options.url).indexOf("?") === -1){
+        // url没有其他参数
+        and = '?'
+      }else {
+        // 有参数
+        and = '&'
+      }
+      suffix = and + 'token=' + localStorage.getItem("token")
+    }else {
+      suffix = ''
+    }
+    // 开始封装请求
+    $.ajax({
+      url: prefix + options.url + suffix,
+      // 默认GET
+      type: options.type ? options.type : 'GET',
+      // 默认null
+      data: typeof(options.data) == "undefined" ? null : options.data,
+      // 默认true
+      processData: typeof(options.processData) == "undefined" ? true : options.processData,
+      // 默认json
+      dataType: typeof(options.dataType) == "undefined" ? 'json' : options.dataType,
+      // 默认application/json;charset=UTF-8
+      contentType: typeof(options.contentType) == "undefined" ? 'application/json;charset=UTF-8' : options.contentType,
+      success: function (res) {
+        // 这里可以进行相应封装
+        if (res.code === 1){
+          console.log("没有数据");
+        }
+        if (res.code === 0 && typeof options.success === "function"){
+          // 把值作为回调函数返回
+          console.log("一切正常");
+          options.success(res)
+        }
+      },
+      error: function (error) {
+        if (typeof options.fail === "function") {
+          // 把值作为回调函数返回
+          options.error(error)
+        }
+      }
+    })
+  }
+</script>
+</body>
+</html>
