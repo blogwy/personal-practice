@@ -11,7 +11,7 @@ xxx(ES6) 由blogwy维护
 
 // --------字符串模块--------
 /**
- * 去掉参数str中的空格
+ * @description 去掉参数str中的空格
  * @method trim
  * @param {string} str 参数名
  * @param {number} type 参数名  1-所有空格  2-前后空格  3-前空格 4-后空格
@@ -32,6 +32,22 @@ const trim = (str, type) => {
       return str;
   }
 };
+/**
+ * @description 替换字符串
+ * @method replaceStr
+ * @param {string} str 被替换的字符串
+ * @param {string} startStr 开始字符串 为空则从开头匹配
+ * @param {string} endStr 结束字符串 为空则从结尾匹配
+ * @param {string} repStr 替换的字符串
+ * @return {string} 替换后的字符串
+ * @example replaceStr("wangbilibiliyu","wang","yu","acfun") --> "wangacfunyu"
+ * */
+const replaceStr = (str,startStr,endStr,repStr) => {
+  let str1 = '',str2 = '';
+  str1 = str.match(new RegExp(startStr + '(\\S*)' + endStr))[1];
+  str2 = str.replace(new RegExp(str1),repStr);
+  return str2;
+};
 // --------数组模块--------
 
 // --------验证模块--------
@@ -39,7 +55,7 @@ const trim = (str, type) => {
 // --------其他模块--------
 
 /**
- * 获取url里面的具体参数
+ * @description 获取url里面的具体参数
  * @method getUrlParam
  * @param {string} paramName 参数名
  * @return {string} 返回要获取的参数值
@@ -61,10 +77,11 @@ const getUrlParam = paramName => {
   }
 };
 /**
- * 获取当前时间
- * @method getUrlParam
- * @param {string} rules 时间格式 例如: YYYY-MM-DD hh:mm:ss W --> 2019-02-15 15:43:24 星期五
+ * @description 获取当前时间
+ * @method getNowTime
+ * @param {string} rules 时间格式
  * @return {string} 格式化后的当前时间
+ * @example getNowTime("YYYY-MM-DD hh:mm:ss W") --> "2019-02-15 15:43:24 星期五"
  */
 const getNowTime = rules => {
   let now = new Date(),
@@ -94,13 +111,13 @@ const getNowTime = rules => {
 };
 
 /**
- * 格式化时间戳
- * @method getUrlParam
- * @param {string} rules 时间格式 例如: YYYY-MM-DD hh:mm:ss W --> 2019-02-15 15:43:24 星期五
+ * @description 格式化时间戳
+ * @method formatTimestamp
+ * @param {string} rules 时间格式
  * @param {number} timestamp 时间戳
  * @return {string} 格式化后的当前时间
+ * @example 时间格式与getNowTime相同
  */
-
 const formatTimestamp = (timestamp,rules) => {
   let date = new Date(),
       str = rules,
@@ -132,5 +149,11 @@ const formatTimestamp = (timestamp,rules) => {
 
   return str;
 };
-export { trim,getUrlParam,getNowTime,formatTimestamp }
+export {
+  trim,
+  replaceStr,
+  getUrlParam,
+  getNowTime,
+  formatTimestamp
+}
 
