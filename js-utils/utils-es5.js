@@ -78,56 +78,31 @@ var utils = {
     }
   },
   /**
-   * @description 获取当前时间
-   * @method getNowTime
-   * @param {string} rules 时间格式
+   * @description 格式化时间戳
+   * @method formatTimestamp
+   * @param {Boolean} options.isNow 是否是当前时间,默认false
+   * @param {string} options.rules 时间格式,默认为YYYY-MM-DD hh:mm:ss W
+   * @param {number} options.timestamp 时间戳,如果isNow为true此项不填
    * @return {string} 格式化后的当前时间
    * @example getNowTime("YYYY-MM-DD hh:mm:ss W") --> "2019-02-15 15:43:24 星期五"
    */
-  getNowTime: function (rules) {
-    var now = new Date(),
-        str = rules,
+  formatTimestamp: function (options) {
+    var date,
+        str = options.rules ? options.rules : "YYYY-MM-DD hh:mm:ss W",
+        isNow = typeof(options.isNow) == "undefined" ? false : options.isNow,
+        timestamp = options.timestamp ? options.timestamp : 0,
         week = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-
-    str = str.replace(/yyyy|YYYY/, now.getFullYear());
-    str = str.replace(/yy|YY/, (now.getYear() % 100) > 9 ? (now.getYear() % 100).toString() : '0' + (now.getYear() % 100));
-
-    str = str.replace(/MM/, now.getMonth() > 8 ? (now.getMonth() + 1).toString() : '0' + (now.getMonth() + 1));
-    str = str.replace(/M/g, now.getMonth() + 1);
-
-    str = str.replace(/w|W/g, week[now.getDay()]);
-
-    str = str.replace(/dd|DD/, now.getDate() > 9 ? now.getDate().toString() : '0' + now.getDate());
-    str = str.replace(/d|D/g, now.getDate());
-
-    str = str.replace(/hh|HH/, now.getHours() > 9 ? now.getHours().toString() : '0' + now.getHours());
-    str = str.replace(/h|H/g, now.getHours());
-    str = str.replace(/mm/, now.getMinutes() > 9 ? now.getMinutes().toString() : '0' + now.getMinutes());
-    str = str.replace(/m/g, now.getMinutes());
-
-    str = str.replace(/ss|SS/, now.getSeconds() > 9 ? now.getSeconds().toString() : '0' + now.getSeconds());
-    str = str.replace(/s|S/g, now.getSeconds());
-
-    return str;
-  },
-  /**
-   * @description 格式化时间戳
-   * @method formatTimestamp
-   * @param {string} rules 时间格式
-   * @param {number} timestamp 时间戳
-   * @return {string} 格式化后的当前时间
-   * @example 时间格式与getNowTime相同
-   */
-  formatTimestamp: function (timestamp,rules) {
-    var date = new Date(),
-        str = rules,
-        week = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-    if (timestamp.toString().length === 10){
-      date = new Date(timestamp*1000);
+    if (isNow){
+      date = new Date();
+    }else {
+      if (timestamp.toString().length === 10){
+        date = new Date(timestamp*1000);
+      }
+      if (timestamp.toString().length === 13) {
+        date = new Date(timestamp);
+      }
     }
-    if (timestamp.toString().length === 13) {
-      date = new Date(timestamp);
-    }
+
     str = str.replace(/yyyy|YYYY/, date.getFullYear());
     str = str.replace(/yy|YY/, (date.getYear() % 100) > 9 ? (date.getYear() % 100).toString() : '0' + (date.getYear() % 100));
 
