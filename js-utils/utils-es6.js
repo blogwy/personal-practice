@@ -90,27 +90,26 @@ const getUrlParam = paramName => {
 /**
  * @description 格式化时间戳
  * @method formatTimestamp
- * @param {Boolean} options.isNow 是否是当前时间,默认false
- * @param {string} options.rules 时间格式,默认为YYYY-MM-DD hh:mm:ss W
- * @param {number} options.timestamp 时间戳,如果isNow为true此项不填
+ * @param {Boolean} isNow 是否是当前时间,默认false
+ * @param {string} rules 时间格式,默认为YYYY-MM-DD hh:mm:ss W
+ * @param {number} timestamp 时间戳,如果isNow为true此项不填
  * @return {string} 格式化后的当前时间
  * @example getNowTime("YYYY-MM-DD hh:mm:ss W") --> "2019-02-15 15:43:24 星期五"
  */
-const formatTimestamp = (options) => {
+const formatTimestamp = ({ isNow,rules,timestamp }) => {
   let date,
-      str = options.rules ? options.rules : "YYYY-MM-DD hh:mm:ss W",
-      isNow = typeof(options.isNow) == "undefined" ? false : options.isNow,
-      timestamp = options.timestamp ? options.timestamp : 0,
+      str = rules ? rules : "YYYY-MM-DD hh:mm:ss W",
+      _isNow = typeof(isNow) == "undefined" ? false : isNow,
+      _timestamp = timestamp ? timestamp : 0,
       week = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-  console.log(arguments);
-  if (isNow){
+  if (_isNow){
     date = new Date();
   }else {
-    if (timestamp.toString().length === 10){
-      date = new Date(timestamp*1000);
+    if (_timestamp.toString().length === 10){
+      date = new Date(_timestamp*1000);
     }
-    if (timestamp.toString().length === 13) {
-      date = new Date(timestamp);
+    if (_timestamp.toString().length === 13) {
+      date = new Date(_timestamp);
     }
   }
   str = str.replace(/yyyy|YYYY/, date.getFullYear());
