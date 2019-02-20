@@ -4,7 +4,7 @@ xxx(ES6) 由blogwy维护
 
 作者GitHub：https://github.com/blogwy
 
-作者个人博客：https://www.wangyu.link
+作者个人博客：http://www.wangyu.link
 
 本项目GitHub开源，欢迎热心网友修改源码，无需注明出处。
 */
@@ -49,7 +49,17 @@ const replaceStr = (str,startStr,endStr,repStr) => {
   return str2;
 };
 // --------数组模块--------
-
+/**
+ * @description 深拷贝数组、对象
+ * @method deepCopy
+ * @param {string} obj 参数名
+ * @return {string} 拷贝后的数组、对象
+ */
+const deepCopy = obj => {
+  let _obj = JSON.stringify(obj),
+      resObj = JSON.parse(_obj);
+  return resObj;
+}
 // --------验证模块--------
 
 // --------其他模块--------
@@ -127,6 +137,7 @@ const formatTimestamp = (options) => {
 export {
   trim,
   replaceStr,
+  deepCopy,
   getUrlParam,
   formatTimestamp
 }
