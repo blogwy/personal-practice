@@ -133,11 +133,42 @@ const formatTimestamp = ({ isNow,rules,timestamp }) => {
 
   return str;
 };
+
+/**
+ * @description 数组转对象
+ * @method arrayToObject
+ * @param {Array} array 需要转化的数组
+ * @return {Object} 格式化后的对象
+ */
+const arrayToObject = array => {
+  let keyItem = [],keys,result = {};
+  keys = Object.keys(array[0]);
+  keys.forEach(function (item,index) {
+    let obj = {};
+    obj.key = item;
+    obj.val = [];
+    keyItem.push(obj);
+  });
+
+  array.forEach(function (item,index) {
+    keys.forEach(function (item0,index0) {
+      keyItem[index0].val.push(item[keyItem[index0].key])
+    })
+  });
+
+  keyItem.forEach(function (item,index) {
+    result[item.key] = item.val;
+  });
+  console.log(result);
+  return result;
+};
+
 export {
   trim,
   replaceStr,
   deepCopy,
   getUrlParam,
-  formatTimestamp
+  formatTimestamp,
+  arrayToObject
 }
 

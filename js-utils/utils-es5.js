@@ -134,6 +134,34 @@ var utils = {
     str = str.replace(/s|S/g, date.getSeconds());
 
     return str;
+  },
+  /**
+   * @description 数组转对象
+   * @method arrayToObject
+   * @param {Array} array 需要转化的数组
+   * @return {Object} 格式化后的对象
+   */
+  arrayToObject: function (array) {
+    var keyItem = [],keys,result = {};
+    keys = Object.keys(array[0]);
+    keys.forEach(function (item,index) {
+      var obj = {};
+      obj.key = item;
+      obj.val = [];
+      keyItem.push(obj);
+    });
+
+    array.forEach(function (item,index) {
+      keys.forEach(function (item0,index0) {
+        keyItem[index0].val.push(item[keyItem[index0].key])
+      })
+    });
+
+    keyItem.forEach(function (item,index) {
+      result[item.key] = item.val;
+    });
+    console.log(result);
+    return result;
   }
 };
 
