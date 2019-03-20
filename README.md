@@ -11,6 +11,7 @@
 9. js-utils 常用的javascript工具函数
 10. jquery-ajax-filter 封装jquery Ajax作为ajax过滤器
 11. vue-axios-filter vue axios请求响应过滤器示例
+12. wechat-websocket [微信小程序WebSocket封装](https://github.com/blogwy/personal-practice/blob/master/wechat-websocket/wechat-websocket.md)
 
 ## 相关图片
 1. 无
@@ -41,3 +42,5 @@
 10. 无
 
 11. 无
+
+12. 无
