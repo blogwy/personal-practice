@@ -95,7 +95,7 @@ var utils = {
    * @param {string} options.rules 时间格式,默认为YYYY-MM-DD hh:mm:ss W
    * @param {number} options.timestamp 时间戳,如果isNow为true此项不填
    * @return {string} 格式化后的当前时间
-   * @example getNowTime("YYYY-MM-DD hh:mm:ss W") --> "2019-02-15 15:43:24 星期五"
+   * @example formatTimestamp({"rules": ""}) --> "2019-02-15 15:43:24 星期五"
    */
   formatTimestamp: function (options) {
     var date,
@@ -162,6 +162,17 @@ var utils = {
     });
     console.log(result);
     return result;
-  }
+  },
+  /**
+	 * @description mm转px,此函数只适用于屏幕为96DPI的设备(大部分都是)
+	 * @method mmTopx
+	 * @param {number} mm 毫米
+	 * @return {number} px 像素
+	 */
+	function mmToPx(mm) {
+		var m = parseFloat(mm);
+		var px = (m*0.0393*96).toFixed(2);
+		return px;
+	}
 };
 

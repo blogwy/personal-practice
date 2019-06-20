@@ -163,12 +163,21 @@ const arrayToObject = array => {
   return result;
 };
 
+/**
+ * @description mm转px,此函数只适用于屏幕为96DPI的设备(大部分都是)
+ * @method mmTopx
+ * @param {number} mm 毫米
+ * @return {number} px 像素
+ */
+const mmToPx = mm => (parseFloat(mm)*0.0393*96).toFixed(2);
+
 export {
   trim,
   replaceStr,
   deepCopy,
   getUrlParam,
   formatTimestamp,
-  arrayToObject
+  arrayToObject,
+	mmToPx
 }
 
