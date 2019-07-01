@@ -135,6 +135,71 @@ var utils = {
 
     return str;
   },
+	/**
+	 * @description 在当前时间基础上获取时间戳
+	 * @param {Boolean} options.isNow 默认false
+	 * @param {String} options.type 可选值year/month/day/hour/minute/second
+	 * @param {number} options.offset
+	 * @param {Boolean} options.isAdd
+	 * @return {number} 时间戳(13位)
+	 */
+	getDateTime: function (options) {
+		var isNow = typeof(options.isNow) == "undefined" ? false : options.isNow,
+				type = options.type,
+				offset = options.offset,
+				isAdd = options.isAdd,
+				now = new Date().getTime(),
+				oneSecond = 1000,
+				oneMinute = 60 * oneSecond,
+				oneHour = 60 * oneMinute,
+				oneDay = 24 * oneHour,
+				oneMonth = 30 * oneDay,
+				oneYear = 12 * oneMonth;
+		if (isNow){
+			return now;
+		}else {
+			switch (type){
+				case 'year':
+					if (isAdd){
+						return new Date(now + (oneYear * offset)).getTime();
+					}else {
+						return new Date(now - (oneYear * offset)).getTime();
+					}
+				case 'month':
+					if (isAdd){
+						return new Date(now + (oneMonth * offset)).getTime();
+					}else {
+						return new Date(now - (oneMonth * offset)).getTime();
+					}
+				case 'day':
+					if (isAdd){
+						return new Date(now + (oneDay * offset)).getTime();
+					}else {
+						return new Date(now - (oneDay * offset)).getTime();
+					}
+				case 'hour':
+					if (isAdd){
+						return new Date(now + (oneHour * offset)).getTime();
+					}else {
+						return new Date(now - (oneHour * offset)).getTime();
+					}
+				case 'minute':
+					if (isAdd){
+						return new Date(now + (oneMinute * offset)).getTime();
+					}else {
+						return new Date(now - (oneMinute * offset)).getTime();
+					}
+				case 'second':
+					if (isAdd){
+						return new Date(now + (oneSecond * offset)).getTime();
+					}else {
+						return new Date(now - (oneSecond * offset)).getTime();
+					}
+				default:
+					return now;
+			}
+		}
+	},
   /**
    * @description 数组转对象
    * @method arrayToObject

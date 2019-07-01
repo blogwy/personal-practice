@@ -164,6 +164,72 @@ const arrayToObject = array => {
 };
 
 /**
+ * @description 在当前时间基础上获取时间戳
+ * @param {Boolean} options.isNow 默认false
+ * @param {String} options.type 可选值year/month/day/hour/minute/second
+ * @param {number} options.offset
+ * @param {Boolean} options.isAdd
+ * @return {number} 时间戳(13位)
+ */
+const getDateTime = ({isNow,type,offset,isAdd}) => {
+	let _isNow = typeof(isNow) == "undefined" ? false : isNow,
+			_type = type,
+			_offset = offset,
+			_isAdd = isAdd,
+			now = new Date().getTime(),
+			oneSecond = 1000,
+			oneMinute = 60 * oneSecond,
+			oneHour = 60 * oneMinute,
+			oneDay = 24 * oneHour,
+			oneMonth = 30 * oneDay,
+			oneYear = 12 * oneMonth;
+	if (_isNow){
+		return now;
+	}else {
+		switch (_type){
+			case 'year':
+				if (_isAdd){
+					return new Date(now + (oneYear * _offset)).getTime();
+				}else {
+					return new Date(now - (oneYear * _offset)).getTime();
+				}
+			case 'month':
+				if (_isAdd){
+					return new Date(now + (oneMonth * _offset)).getTime();
+				}else {
+					return new Date(now - (oneMonth * _offset)).getTime();
+				}
+			case 'day':
+				if (_isAdd){
+					return new Date(now + (oneDay * _offset)).getTime();
+				}else {
+					return new Date(now - (oneDay * _offset)).getTime();
+				}
+			case 'hour':
+				if (_isAdd){
+					return new Date(now + (oneHour * _offset)).getTime();
+				}else {
+					return new Date(now - (oneHour * _offset)).getTime();
+				}
+			case 'minute':
+				if (_isAdd){
+					return new Date(now + (oneMinute * _offset)).getTime();
+				}else {
+					return new Date(now - (oneMinute * _offset)).getTime();
+				}
+			case 'second':
+				if (_isAdd){
+					return new Date(now + (oneSecond * _offset)).getTime();
+				}else {
+					return new Date(now - (oneSecond * _offset)).getTime();
+				}
+			default:
+				return now;
+		}
+	}
+}
+
+/**
  * @description mm转px,此函数只适用于屏幕为96DPI的设备(大部分都是)
  * @method mmTopx
  * @param {number} mm 毫米
@@ -178,6 +244,7 @@ export {
   getUrlParam,
   formatTimestamp,
   arrayToObject,
+	getDateTime,
 	mmToPx
 }
 
