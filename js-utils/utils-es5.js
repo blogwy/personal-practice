@@ -134,6 +134,135 @@ var utils = {
     });
     return result;
   },
+	/**
+	 * @description 检测字符串类型,多用于表单验证
+	 * @param type {string} email tel phone url number english numen chinese lower upper reg
+	 * @param str {string} 需要过滤的字符串
+	 * @param rex {string} 当type=reg时候,rex有效为具体的正则表达式
+	 * @return {Boolean} 结果 true/false
+	 */
+	checkType: function(str,type,rex) {
+		var utils = {
+			isNumber: function (val) {
+				var regPos = /^\d+(\.\d+)?$/; //非负浮点数
+				var regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/; //负浮点数
+				if(regPos.test(val) || regNeg.test(val)) {
+					return true;
+				} else {
+					return false;
+				}
+			},
+			// 固话
+			isTel : function (val) {
+				var reg = /^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/;
+				if (reg.test(val)){
+					return true;
+				}else {
+					return false;
+				}
+			},
+			// 手机号
+			isPhone : function (val) {
+				var reg = /^1(3|4|5|7|8)\d{9}$/;
+				if (reg.test(val)){
+					return true;
+				}else {
+					return false;
+				}
+			},
+			isUrl : function (val) {
+				var reg = /^[a-zA-z]+:\/\/(\w+(-\w+)*)(\.(\w+(-\w+)*))*(\?\S*)?$/;
+				if (reg.test(val)){
+					return true;
+				}else {
+					return false;
+				}
+			},
+			isEmail : function (val) {
+				var reg = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
+				if (reg.test(val)){
+					return true;
+				}else {
+					return false;
+				}
+			},
+			isEnglish : function (val) {
+				var reg = /[a-zA-Z]/g;
+				if (reg.test(val)){
+					return true;
+				}else {
+					return false;
+				}
+			},
+			isNumen : function (val) {
+				var reg = /[0-9A-Za-z\\s]/g;
+				if (reg.test(val)){
+					return true;
+				}else {
+					return false;
+				}
+			},
+			isLower : function (val) {
+				var reg = /[a-z]/g;
+				if (reg.test(val)){
+					return true;
+				}else {
+					return false;
+				}
+			},
+			isUpper : function (val) {
+				var reg = /[A-Z]/g;
+				if (reg.test(val)){
+					return true;
+				}else {
+					return false;
+				}
+			},
+			// 都是中文
+			isChinese: function (val) {
+				var reg = /[^\u4e00-\u9fa5]/g;
+				if (reg.test(val)){
+					return false;
+				}else {
+					return true;
+				}
+			}
+		};
+		switch (type){
+			case 'reg':
+				if (rex){
+					if (new RegExp(rex).test(str)){
+						return true;
+					}else {
+						return false;
+					}
+				}else {
+					return false;
+				}
+			case 'email':
+				return utils.isEmail(str);
+			case 'tel':
+				return utils.isTel(str);
+			case 'phone':
+				return utils.isPhone(str);
+			case 'url':
+				return utils.isUrl(str);
+			case 'number':
+				return utils.isNumber(str);
+			case 'english':
+				return utils.isEnglish(str);
+			case 'numen':
+				return utils.isNumen(str);
+			case 'chinese':
+				return utils.isChinese(str);
+			case 'lower':
+				return utils.isLower(str);
+			case 'upper':
+				return utils.isUpper(str);
+			default:
+				return false;
+		}
+	},
 
   // --------其他模块--------
   /**
