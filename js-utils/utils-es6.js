@@ -60,7 +60,50 @@ const deepCopy = obj => {
       resObj = JSON.parse(_obj);
   return resObj;
 }
+/**
+ * @description 计算数组中一项出现的次数
+ * @param arr
+ * @param item
+ * @return {number} 出现的次数
+ */
+ const arrayItemCount = (arr,item) => {
+	var count = 0;
+  arr.forEach(function (items,index) {
+    if (items === item){
+      count += 1;
+    }
+  });
+  return count;
+ }
+
 // --------验证模块--------
+/**
+ * @description 检测数据类型
+ * @param data 要检测的数据
+ * @param {String} type 要进行比较的数据类型,如果写多个用逗号隔开,不填则返回具体的数据类型
+ * @return {String/Boolean} 数据类型/比较结果
+ */
+const isType = (data,type) => {
+  if (!type) return Object.prototype.toString.call(data).match(/\s(.*)]/)[1];
+  let _type = type.toLowerCase().split(',');
+  let typeObj = {
+    'string': '[object String]',
+    'number': '[object Number]',
+    'boolean': '[object Boolean]',
+    'null': '[object Null]',
+    'function': '[object Function]',
+    'array': '[object Array]',
+    'object': '[object Object]',
+    'symbol': '[object Symbol]'
+  };
+  let result = false;
+  for (let item of _type){
+    if (typeObj[item] && typeObj[item] === Object.prototype.toString.call(data)){
+      result = true;
+    }
+  }
+  return result;
+};
 
 // --------其他模块--------
 
@@ -228,7 +271,55 @@ const getDateTime = ({isNow,type,offset,isAdd}) => {
 		}
 	}
 }
-
+/**
+ * @description 随机返回一个范围的数字
+ * @param n1
+ * @param n2
+ * @return {number}
+ */
+const randomNumber = (n1, n2) => {
+	switch (arguments.length) {
+		case 2:
+			return Math.round(n1 + Math.random() * (n2 - n1));
+		case 1:
+			return Math.round(Math.random() * n1);
+		default:
+			return Math.round(Math.random() * 100000000);
+	}
+}
+/**
+ * @description 随机产生颜色
+ * @param {number} 输入16时候，会输出16进制颜色代码 
+ * @return {string}
+ */
+const	randomColor = sum => {
+	if (sum) {
+		return '#' + Math.random().toString(16).substring(2).substr(0, 6);
+	}
+	else {
+		return 'rgb(' + this.randomNumber(255) + ',' + this.randomNumber(255) + ',' + this.randomNumber(255) + ')';
+	}
+}
+/**
+ * @description 随机字符串生成
+ * @param type {number} 0 -- 只有数字, 1 -- 只有字母, 2 -- 数字和字母, 3 -- 数字字母特殊符号
+ * @param n {number} 长度
+ * @return {string} 随机字符串
+ */
+const randomString = (type,n) => {
+	var typeArray = [
+		"0123456789",
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*()_-<>/?[]{}|.,"
+	];
+	var len = typeArray[type].length;
+	var result = '';
+	for (var i=0;i<n;i++){
+		result += typeArray[type].charAt(Math.ceil(Math.random() * len))
+	}
+	return result;
+}
 /**
  * @description mm转px,此函数只适用于屏幕为96DPI的设备(大部分都是)
  * @method mmTopx
@@ -241,10 +332,15 @@ export {
   trim,
   replaceStr,
   deepCopy,
+	arrayItemCount,
   getUrlParam,
+	isType,
   formatTimestamp,
   arrayToObject,
 	getDateTime,
+	randomNumber,
+	randomColor,
+	randomString,
 	mmToPx
 }
 
