@@ -13,9 +13,9 @@ xxx(ES6) 由blogwy维护
 /**
  * @description 去掉参数str中的空格
  * @method trim
- * @param {string} str 参数名
- * @param {number} type 参数名  1-所有空格  2-前后空格  3-前空格 4-后空格
- * @return {string} 去掉空格是str
+ * @param {string} str
+ * @param {number} type  1-所有空格  2-前后空格  3-前空格 4-后空格
+ * @return {string} 去掉空格后的str
  */
 const trim = (str, type) => {
   str = str.toString();
@@ -48,6 +48,34 @@ const replaceStr = (str,startStr,endStr,repStr) => {
   str2 = str.replace(new RegExp(str1),repStr);
   return str2;
 };
+/**
+ * @description 根据规则过滤字符串
+ * @param type {number} 0 -- 小写字母, 1 -- 大写字母, 2 -- 字母, 3 -- 数字, 4 -- 中文, 5 -- html标签, 6 -- 特殊字符
+ * @param str {string} 需要过滤的字符串
+ * @param replaceStr {string} 替换的字符串，默认空
+ * @return {string}
+ */
+const	filterString = (type,str,replaceStr = '') => {
+	switch (type){
+		case 0:
+			return str.replace(/[a-z]/g, repStr);
+		case 1:
+			return str.replace(/[A-Z]/g, repStr);
+		case 2:
+			return str.replace(/[a-zA-Z]/g, repStr);
+		case 3:
+			return str.replace(/[0-9]/g, repStr);
+		case 4:
+			return str.replace(/[\u4E00-\u9FA5]/g, repStr);
+	  case 5:
+			return str.replace(/<\/?[^>]*>/g, repStr);
+		case 6:
+			return str.replace(/[^0-9A-Za-z\\s]/g, repStr);
+		default:
+			return 'error';
+	}
+}
+
 // --------数组模块--------
 /**
  * @description 深拷贝数组、对象
@@ -307,15 +335,15 @@ const	randomColor = sum => {
  * @return {string} 随机字符串
  */
 const randomString = (type,n) => {
-	var typeArray = [
+	let typeArray = [
 		"0123456789",
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*()_-<>/?[]{}|.,"
 	];
-	var len = typeArray[type].length;
-	var result = '';
-	for (var i=0;i<n;i++){
+	let len = typeArray[type].length;
+	let result = '';
+	for (let i=0;i<n;i++){
 		result += typeArray[type].charAt(Math.ceil(Math.random() * len))
 	}
 	return result;
@@ -331,6 +359,7 @@ const mmToPx = mm => (parseFloat(mm)*0.0393*96).toFixed(2);
 export {
   trim,
   replaceStr,
+	filterString,
   deepCopy,
 	arrayItemCount,
   getUrlParam,
