@@ -96,7 +96,7 @@ var utils = {
 	 * @param item
 	 * @return {number} 出现的次数
 	 */
-	arrayItemCount： function (arr,item){
+	arrayItemCount：function (arr,item){
 		var count = 0;
 		arr.forEach(function (items,index) {
 			if (items === item){
@@ -104,6 +104,40 @@ var utils = {
 			}
 		});
 		return count;
+	},
+	/**
+	 * @description 数组去重
+	 * @param arr
+	 * @return {Array} 
+	 */
+	arrayUnique: function(arr) {
+		if (!Array.isArray(arr)) {
+			console.log('type error!');
+			return;
+		}
+		var array = [];
+		for (var i = 0; i < arr.length; i++) {
+			if (array .indexOf(arr[i]) === -1) {
+				array .push(arr[i])
+			}
+		}
+		return array;
+	},
+	/**
+	 * @description 数组中最小值
+	 * @param array
+	 * @return {Number} 
+	 */
+	arrayMin: function(array) {
+		return Math.min.apply(Math, array);
+	},
+	/**
+	 * @description 数组中最大值
+	 * @param array
+	 * @return {Number} 
+	 */
+	arrayMax: function(array) {
+		return Math.max.apply(Math, array);
 	},
   // --------验证模块--------
 	

@@ -103,7 +103,26 @@ const deepCopy = obj => {
   });
   return count;
  }
-
+/**
+ * @description 数组去重
+ * @param array
+ * @return {Array} 
+ */
+ const arrayUnique = array => [...new Set(array)];
+ 
+ /**
+  * @description 数组中最大值
+  * @param array
+  * @return {Number} 
+  */
+ const arrayMax = array => Math.max(...arr);
+ 
+ /**
+  * @description 数组中最小值
+  * @param array
+  * @return {Number} 
+  */
+ const arrayMin = array => Math.min(...arr);
 // --------验证模块--------
 /**
  * @description 检测数据类型
