@@ -505,6 +505,56 @@ const randomString = (type,n) => {
  */
 const mmToPx = mm => (parseFloat(mm)*0.0393*96).toFixed(2);
 
+/**
+ * @description 设置cookie
+ * @param key 键
+ * @param val 值
+ * @param day 时长(天)
+ */
+const setCookie = (key,val,day) => {
+  let eDay = new Date();
+  eDay.setDate(eDay.getDate() + day);
+  document.cookie = key + '=' + val + ';expires=' + eDay;
+};
+/**
+ * @description 获取cookie值
+ * @param key 键
+ * @return 值
+ */
+const getCookie = key => {
+  let arr = document.cookie.split('; '), arr2;
+  for (let i = 0; i < arr.length; i++) {
+    arr2 = arr[i].split('=');
+    if (arr2[0] === key) {
+      return arr2[1];
+    }
+  }
+  return undefined;
+};
+/**
+ * @description 删除cookie
+ * @param key 键
+ * @return {boolean} true: 成功 false: 失败
+ */
+const removeCookie = key => {
+  document.cookie = key + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  if (!getCookie(key)){
+    return true;
+  }else {
+    return false;
+  }
+};
+/**
+ * @description 清除所有cookie
+ */
+const clearCookie = () => {
+  let arr = document.cookie.split('; '), arr2;
+  for (let i = 0; i < arr.length; i++) {
+    arr2 = arr[i].split('=');
+    document.cookie = arr2[0] + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  }
+};
+
 export {
   trim,
   replaceStr,
@@ -520,6 +570,10 @@ export {
 	randomNumber,
 	randomColor,
 	randomString,
-	mmToPx
+	mmToPx,
+	setCookie,
+	getCookie,
+	removeCookie,
+	clearCookie
 }
 

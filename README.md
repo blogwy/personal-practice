@@ -8,7 +8,7 @@
 6. MSDN-API: MSDN API
 7. WebSocket Demo
 8. 在线画线框图(可到处png和svg)
-9. js-utils 常用的javascript工具函数
+9. [js-utils 常用的javascript工具函数](https://github.com/blogwy/personal-practice/blob/master/js-utils/README.md)
 10. jquery-ajax-filter 封装jquery Ajax作为ajax过滤器
 11. vue-axios-filter vue axios请求响应过滤器示例
 12. wechat-websocket [微信小程序WebSocket封装](https://github.com/blogwy/personal-practice/blob/master/wechat-websocket/wechat-websocket.md)

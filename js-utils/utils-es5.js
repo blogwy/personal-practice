@@ -521,6 +521,58 @@ var utils = {
 		var m = parseFloat(mm);
 		var px = (m*0.0393*96).toFixed(2);
 		return px;
+	},
+	/**
+	 * @description 设置cookie
+	 * @param key 键
+	 * @param val 值
+	 * @param day 时长(天)
+	 */
+	setCookie: function(key,val,day) {
+		var eDay = new Date();
+		eDay.setDate(eDay.getDate() + day);
+		document.cookie = key + '=' + val + ';expires=' + eDay;
+	},
+
+	/**
+	 * @description 获取cookie值
+	 * @param key 键
+	 * @return 值
+	 */
+	getCookie: function(key) {
+		var arr = document.cookie.split('; '), arr2;
+		for (var i = 0; i < arr.length; i++) {
+			arr2 = arr[i].split('=');
+			if (arr2[0] === key) {
+				return arr2[1];
+			}
+		}
+		return undefined;
+	},
+
+	/**
+	 * @description 删除cookie
+	 * @param key 键
+	 * @return {boolean} true: 成功 false: 失败
+	 */
+	removeCookie: function(key) {
+		document.cookie = key+"=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+		if (!getCookie(key)){
+			return true;
+		}else {
+			return false;
+		}
+	},
+
+	/**
+	 * @description 清除所有cookie
+	 */
+	clearCookie: function() {
+		var arr = document.cookie.split('; '), arr2;
+		for (var i = 0; i < arr.length; i++) {
+			arr2 = arr[i].split('=');
+			document.cookie = arr2[0] + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+		}
 	}
 };
 
