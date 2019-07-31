@@ -448,6 +448,36 @@ const getDateTime = ({isNow,type,offset,isAdd}) => {
 		}
 	}
 }
+
+/**
+ * @description 获取当前月总天数
+ * @param {number} timestamp 时间戳
+ * @return {number} 天数
+ */
+const getMonthDays = timestamp => {
+  let date = new Date(timestamp),year,mouth,days;
+  if (timestamp.toString().length === 10){
+    date = new Date(timestamp*1000);
+  }else if (timestamp.toString().length === 13){
+    date = new Date(timestamp);
+  }else {
+    return '时间戳格式错误';
+  }
+  year = date.getFullYear();
+  mouth = date.getMonth() + 1;
+  //当月份为二月时，根据闰年还是非闰年判断天数
+  if (mouth == 2) {
+    days = (year%4==0 && year%100==0 && year%400==0) || (year%4==0 && year%100!=0) ? 28 : 29
+  } else if (mouth == 1 || mouth == 3 || mouth == 5 || mouth == 7 || mouth == 8 || mouth == 10 || mouth == 12) {
+    //月份为：1,3,5,7,8,10,12 时，为大月.则天数为31；
+    days = 31
+  } else {
+    //其他月份，天数为：30.
+    days = 30
+  }
+  return days;
+}
+
 /**
  * @description 随机返回一个范围的数字
  * @param n1
@@ -555,6 +585,227 @@ const clearCookie = () => {
   }
 };
 
+/**
+ * @description 判断是否是ios平台
+ */
+const isIos = () => {
+  let u = navigator.userAgent;
+  if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
+    // return "Android";
+    return false
+  } else if (u.indexOf('iPhone') > -1) {//苹果手机
+    // return "iPhone";
+    return true
+  } else if (u.indexOf('iPad') > -1) {//iPad
+    // return "iPad";
+    return false
+  } else if (u.indexOf('Windows Phone') > -1) {//winphone手机
+    // return "Windows Phone";
+    return false
+  }else{
+    return false
+  }
+}
+
+/**
+ * @description 是否为PC平台
+ */
+const isPc = () => {
+  let userAgentInfo = navigator.userAgent;
+  let Agents = ["Android", "iPhone",
+    "SymbianOS", "Windows Phone",
+    "iPad", "iPod"];
+  let flag = true;
+  for (let v = 0; v < Agents.length; v++) {
+    if (userAgentInfo.indexOf(Agents[v]) > 0) {
+      flag = false;
+      break;
+    }
+  }
+  return flag;
+}
+
+/**
+ * @description 获取当前浏览器的类型
+ */
+const browserType = () => {
+  let userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+  let isOpera = userAgent.indexOf("Opera") > -1; //判断是否Opera浏览器
+  let isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera; //判断是否IE浏览器
+  let isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
+  let isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器
+  let isFF = userAgent.indexOf("Firefox") > -1; //判断是否Firefox浏览器
+  let isSafari = userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") == -1; //判断是否Safari浏览器
+  let isChrome = userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Safari") > -1; //判断Chrome浏览器
+
+  if (isIE) {
+    let reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+    reIE.test(userAgent);
+    let fIEVersion = parseFloat(RegExp["$1"]);
+    if(fIEVersion == 7) return "IE7"
+    else if(fIEVersion == 8) return "IE8";
+    else if(fIEVersion == 9) return "IE9";
+    else if(fIEVersion == 10) return "IE10";
+    else return "IE7以下"//IE版本过低
+  }
+  if (isIE11) return 'IE11';
+  if (isEdge) return "Edge";
+  if (isFF) return "FF";
+  if (isOpera) return "Opera";
+  if (isSafari) return "Safari";
+  if (isChrome) return "Chrome";
+}
+
+const priceToChinese = price => {
+  //判断如果传递进来的不是字符的话转换为字符
+  if(typeof price == "number") {
+    price = new String(price);
+  };
+  price = price.replace(/,/g, ""); //替换tomoney()中的“,”
+  price = price.replace(/ /g, "") ;//替换tomoney()中的空格
+  price = price.replace(/￥/g, ""); //替换掉可能出现的￥字符
+  if(isNaN(price)) { //验证输入的字符是否为数字
+//alert("请检查小写金额是否正确");
+    return "";
+  };
+//字符处理完毕后开始转换，采用前后两部分分别转换
+  let part = String(price).split(".");
+  let newchar = "";
+//小数点前进行转化
+  for(let i = part[0].length - 1; i >= 0; i--) {
+    if(part[0].length > 10) {
+      return "";
+//若数量超过拾亿单位，提示
+    }
+    let tmpnewchar = "";
+    let perchar = part[0].charAt(i);
+    switch(perchar) {
+      case "0":
+        tmpnewchar = "零" + tmpnewchar;
+        break;
+      case "1":
+        tmpnewchar = "壹" + tmpnewchar;
+        break;
+      case "2":
+        tmpnewchar = "贰" + tmpnewchar;
+        break;
+      case "3":
+        tmpnewchar = "叁" + tmpnewchar;
+        break;
+      case "4":
+        tmpnewchar = "肆" + tmpnewchar;
+        break;
+      case "5":
+        tmpnewchar = "伍" + tmpnewchar;
+        break;
+      case "6":
+        tmpnewchar = "陆" + tmpnewchar;
+        break;
+      case "7":
+        tmpnewchar = "柒" + tmpnewchar;
+        break;
+      case "8":
+        tmpnewchar = "捌" + tmpnewchar;
+        break;
+      case "9":
+        tmpnewchar = "玖" + tmpnewchar;
+        break;
+    }
+    switch(part[0].length - i - 1) {
+      case 0:
+        tmpnewchar = tmpnewchar + "元";
+        break;
+      case 1:
+        if(perchar != 0) tmpnewchar = tmpnewchar + "拾";
+        break;
+      case 2:
+        if(perchar != 0) tmpnewchar = tmpnewchar + "佰";
+        break;
+      case 3:
+        if(perchar != 0) tmpnewchar = tmpnewchar + "仟";
+        break;
+      case 4:
+        tmpnewchar = tmpnewchar + "万";
+        break;
+      case 5:
+        if(perchar != 0) tmpnewchar = tmpnewchar + "拾";
+        break;
+      case 6:
+        if(perchar != 0) tmpnewchar = tmpnewchar + "佰";
+        break;
+      case 7:
+        if(perchar != 0) tmpnewchar = tmpnewchar + "仟";
+        break;
+      case 8:
+        tmpnewchar = tmpnewchar + "亿";
+        break;
+      case 9:
+        tmpnewchar = tmpnewchar + "拾";
+        break;
+    }
+    let newchar = tmpnewchar + newchar;
+  }
+//小数点之后进行转化
+  if(price.indexOf(".") != -1) {
+    if(part[1].length > 2) {
+// alert("小数点之后只能保留两位,系统将自动截断");
+      part[1] = part[1].substr(0, 2)
+    }
+    for(i = 0; i < part[1].length; i++) {
+      tmpnewchar = "";
+      perchar = part[1].charAt(i);
+      switch(perchar) {
+        case "0":
+          tmpnewchar = "零" + tmpnewchar;
+          break;
+        case "1":
+          tmpnewchar = "壹" + tmpnewchar;
+          break;
+        case "2":
+          tmpnewchar = "贰" + tmpnewchar;
+          break;
+        case "3":
+          tmpnewchar = "叁" + tmpnewchar;
+          break;
+        case "4":
+          tmpnewchar = "肆" + tmpnewchar;
+          break;
+        case "5":
+          tmpnewchar = "伍" + tmpnewchar;
+          break;
+        case "6":
+          tmpnewchar = "陆" + tmpnewchar;
+          break;
+        case "7":
+          tmpnewchar = "柒" + tmpnewchar;
+          break;
+        case "8":
+          tmpnewchar = "捌" + tmpnewchar;
+          break;
+        case "9":
+          tmpnewchar = "玖" + tmpnewchar;
+          break;
+      }
+      if(i == 0) tmpnewchar = tmpnewchar + "角";
+      if(i == 1) tmpnewchar = tmpnewchar + "分";
+      newchar = newchar + tmpnewchar;
+    }
+  }
+//替换所有无用汉字
+  while(newchar.search("零零") != -1)
+    newchar = newchar.replace("零零", "零");
+    newchar = newchar.replace("零亿", "亿");
+    newchar = newchar.replace("亿万", "亿");
+    newchar = newchar.replace("零万", "万");
+    newchar = newchar.replace("零元", "元");
+    newchar = newchar.replace("零角", "");
+    newchar = newchar.replace("零分", "");
+  if(newchar.charAt(newchar.length - 1) == "元") {
+    newchar = newchar + "整"
+  }
+  return newchar;
+}
+
 export {
   trim,
   replaceStr,
@@ -566,6 +817,7 @@ export {
 	checkType,
   formatTimestamp,
   arrayToObject,
+  getMonthDays,
 	getDateTime,
 	randomNumber,
 	randomColor,
@@ -574,6 +826,10 @@ export {
 	setCookie,
 	getCookie,
 	removeCookie,
-	clearCookie
+	clearCookie,
+  isIos,
+  isPc,
+  browserType,
+  priceToChinese
 }
 
