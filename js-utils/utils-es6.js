@@ -58,23 +58,23 @@ const replaceStr = (str,startStr,endStr,repStr) => {
 const	filterString = (type,str,replaceStr = '') => {
 	switch (type){
 		case 0:
-			return str.replace(/[a-z]/g, repStr);
+			return str.replace(/[a-z]/g, replaceStr);
 		case 1:
-			return str.replace(/[A-Z]/g, repStr);
+			return str.replace(/[A-Z]/g, replaceStr);
 		case 2:
-			return str.replace(/[a-zA-Z]/g, repStr);
+			return str.replace(/[a-zA-Z]/g, replaceStr);
 		case 3:
-			return str.replace(/[0-9]/g, repStr);
+			return str.replace(/[0-9]/g, replaceStr);
 		case 4:
-			return str.replace(/[\u4E00-\u9FA5]/g, repStr);
+			return str.replace(/[\u4E00-\u9FA5]/g, replaceStr);
 	  case 5:
-			return str.replace(/<\/?[^>]*>/g, repStr);
+			return str.replace(/<\/?[^>]*>/g, replaceStr);
 		case 6:
-			return str.replace(/[^0-9A-Za-z\\s]/g, repStr);
+			return str.replace(/[^0-9A-Za-z\\s]/g, replaceStr);
 		default:
 			return 'error';
 	}
-}
+};
 
 // --------数组模块--------
 /**
@@ -87,7 +87,7 @@ const deepCopy = obj => {
   let _obj = JSON.stringify(obj),
       resObj = JSON.parse(_obj);
   return resObj;
-}
+};
 /**
  * @description 计算数组中一项出现的次数
  * @param arr
@@ -102,7 +102,7 @@ const deepCopy = obj => {
     }
   });
   return count;
- }
+ };
 /**
  * @description 数组去重
  * @param array
@@ -115,14 +115,14 @@ const deepCopy = obj => {
   * @param array
   * @return {Number} 
   */
- const arrayMax = array => Math.max(...arr);
+ const arrayMax = array => Math.max(...array);
  
  /**
   * @description 数组中最小值
   * @param array
   * @return {Number} 
   */
- const arrayMin = array => Math.min(...arr);
+ const arrayMin = array => Math.min(...array);
 // --------验证模块--------
 /**
  * @description 检测数据类型
@@ -280,7 +280,7 @@ const checkType = (str,type,rex) => {
     default:
       return false;
   }
-}
+};
 
 // --------其他模块--------
 
@@ -447,7 +447,7 @@ const getDateTime = ({isNow,type,offset,isAdd}) => {
 				return now;
 		}
 	}
-}
+};
 
 /**
  * @description 获取当前月总天数
@@ -476,7 +476,7 @@ const getMonthDays = timestamp => {
     days = 30
   }
   return days;
-}
+};
 
 /**
  * @description 随机返回一个范围的数字
@@ -493,7 +493,7 @@ const randomNumber = (n1, n2) => {
 		default:
 			return Math.round(Math.random() * 100000000);
 	}
-}
+};
 /**
  * @description 随机产生颜色
  * @param {number} 输入16时候，会输出16进制颜色代码 
@@ -506,7 +506,7 @@ const	randomColor = sum => {
 	else {
 		return 'rgb(' + this.randomNumber(255) + ',' + this.randomNumber(255) + ',' + this.randomNumber(255) + ')';
 	}
-}
+};
 /**
  * @description 随机字符串生成
  * @param type {number} 0 -- 只有数字, 1 -- 只有字母, 2 -- 数字和字母, 3 -- 数字字母特殊符号
@@ -526,7 +526,7 @@ const randomString = (type,n) => {
 		result += typeArray[type].charAt(Math.ceil(Math.random() * len))
 	}
 	return result;
-}
+};
 /**
  * @description mm转px,此函数只适用于屏幕为96DPI的设备(大部分都是)
  * @method mmTopx
@@ -605,7 +605,7 @@ const isIos = () => {
   }else{
     return false
   }
-}
+};
 
 /**
  * @description 是否为PC平台
@@ -623,7 +623,7 @@ const isPc = () => {
     }
   }
   return flag;
-}
+};
 
 /**
  * @description 获取当前浏览器的类型
@@ -654,8 +654,13 @@ const browserType = () => {
   if (isOpera) return "Opera";
   if (isSafari) return "Safari";
   if (isChrome) return "Chrome";
-}
+};
 
+/**
+ * @description 将数字转换为大写金额
+ * @param {number} Num
+ * @example priceToChinese(123456.78) --> 壹拾贰万叁仟肆佰伍拾陆元柒角捌分
+ */
 const priceToChinese = price => {
   //判断如果传递进来的不是字符的话转换为字符
   if(typeof price == "number") {
@@ -804,7 +809,41 @@ const priceToChinese = price => {
     newchar = newchar + "整"
   }
   return newchar;
-}
+};
+/**
+ * @description 类似于jq的选择器，使用方法相同
+ */
+const $ = selector => {
+  let type = selector.substring(0, 1);
+  if (type === '#') {
+    if (document.querySelecotor) return document.querySelector(selector);
+    return document.getElementById(selector.substring(1));
+
+  }else if (type === '.') {
+    if (document.querySelecotorAll) return document.querySelectorAll(selector);
+    return document.getElementsByClassName(selector.substring(1));
+  }else{
+    return document['querySelectorAll' ? 'querySelectorAll':'getElementsByTagName'](selector);
+  }
+};
+/**
+ * @description 图片预加载
+ * @param {array} arr 图片数组
+ * @param {function} callback 回调函数
+ */
+const imgLoadAll = (arr,callback) => {
+  let arrImg = [];
+  for (let i = 0; i < arr.length; i++) {
+    let img = new Image();
+    img.src = arr[i];
+    img.onload = function(){
+      arrImg.push(this);
+      if (arrImg.length == arr.length) {
+        callback && callback();
+      }
+    }
+  }
+};
 
 export {
   trim,
@@ -830,6 +869,8 @@ export {
   isIos,
   isPc,
   browserType,
-  priceToChinese
+  priceToChinese,
+  $,
+  imgLoadAll
 }
 

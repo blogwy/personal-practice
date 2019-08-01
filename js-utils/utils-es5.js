@@ -673,7 +673,11 @@ var utils = {
     if (isChrome) return "Chrome";
   },
 
-  /*将数字转换为大写金额*/
+  /**
+   * @description 将数字转换为大写金额
+   * @param {number} Num
+   * @example priceToChinese(123456.78) --> 壹拾贰万叁仟肆佰伍拾陆元柒角捌分
+   */
   priceToChinese: function (Num) {
     //判断如果传递进来的不是字符的话转换为字符
     if(typeof Num == "number") {
@@ -822,6 +826,42 @@ var utils = {
       newchar = newchar + "整"
     }
     return newchar;
+  },
+
+  /**
+   * @description 类似于jq的选择器，使用方法相同
+   */
+  $: function(selector){
+    var type = selector.substring(0, 1);
+    if (type === '#') {
+      if (document.querySelecotor) return document.querySelector(selector)
+      return document.getElementById(selector.substring(1))
+
+    }else if (type === '.') {
+      if (document.querySelecotorAll) return document.querySelectorAll(selector)
+      return document.getElementsByClassName(selector.substring(1))
+    }else{
+      return document['querySelectorAll' ? 'querySelectorAll':'getElementsByTagName'](selector)
+    }
+  },
+
+  /**
+   * @description 图片预加载
+   * @param {array} arr 图片数组
+   * @param {function} callback 回调函数
+   */
+  imgLoadAll: function(arr,callback){
+    var arrImg = [];
+    for (var i = 0; i < arr.length; i++) {
+      var img = new Image();
+      img.src = arr[i];
+      img.onload = function(){
+        arrImg.push(this);
+        if (arrImg.length == arr.length) {
+          callback && callback();
+        }
+      }
+    }
   }
 
 };
