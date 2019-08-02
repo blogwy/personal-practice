@@ -834,11 +834,11 @@ var utils = {
   $: function(selector){
     var type = selector.substring(0, 1);
     if (type === '#') {
-      if (document.querySelecotor) return document.querySelector(selector)
+      if (document.querySelecotor) return document.querySelector(selector);
       return document.getElementById(selector.substring(1))
 
     }else if (type === '.') {
-      if (document.querySelecotorAll) return document.querySelectorAll(selector)
+      if (document.querySelecotorAll) return document.querySelectorAll(selector);
       return document.getElementsByClassName(selector.substring(1))
     }else{
       return document['querySelectorAll' ? 'querySelectorAll':'getElementsByTagName'](selector)
@@ -862,7 +862,86 @@ var utils = {
         }
       }
     }
-  }
+  },
+  /**
+   * @description ajax封装
+   * @param {object} setting 配置项
+   */
+  ajax: function (setting) {
+    //设置参数的初始值
+    var opts={
+      method: (setting.method || "GET").toUpperCase(), //请求方式
+      url: setting.url || "", // 请求地址
+      async: setting.async || true, // 是否异步
+      dataType: setting.dataType || "json", // 解析方式
+      contentType: setting.contentType || "application/json;charset=UTF-8",
+      data: setting.data || "", // 参数
+      success: setting.success || function(){}, // 请求成功回调
+      error: setting.error || function(){} // 请求失败回调
+    };
 
+    // 参数格式化
+    function params_format (obj) {
+      var str = '';
+      for (var i in obj) {
+        str += i + '=' + obj[i] + '&'
+      }
+      return str.split('').slice(0, -1).join('');
+    }
+
+    // 创建ajax对象
+    var xhr = new XMLHttpRequest();
+
+    // 连接服务器open(方法GET/POST，请求地址， 异步传输)
+    if(opts.method == 'GET'){
+      var handleUrl;
+      if (opts.url.indexOf('?') === -1){
+        // url里面没有参数
+        if (opts.data){
+          // data里面有参数
+          handleUrl = opts.url + "?" + params_format(opts.data);
+        }else {
+          // data里面没有参数
+          handleUrl = opts.url;
+        }
+      }else {
+        // url里面有参数
+        if (opts.data){
+          // data里面有参数
+          handleUrl = opts.url + "&" + params_format(opts.data);
+        }else {
+          // data里面没有参数
+          handleUrl = opts.url;
+        }
+      }
+      xhr.open(opts.method, handleUrl, opts.async);
+      xhr.send();
+    }else{
+      xhr.open(opts.method, opts.url, opts.async);
+      xhr.setRequestHeader("Content-Type",opts.contentType);
+      xhr.send(opts.data);
+    }
+
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && (xhr.status === 200 || xhr.status === 304)) {
+        switch(opts.dataType){
+          case "json":
+            var json = JSON.parse(xhr.responseText);
+            opts.success(json);
+            break;
+          case "xml":
+            opts.success(xhr.responseXML);
+            break;
+          default:
+            opts.success(xhr.responseText);
+            break;
+        }
+      }
+    };
+
+    xhr.onerror = function(err) {
+      opts.error(err);
+    }
+  }
 };
 

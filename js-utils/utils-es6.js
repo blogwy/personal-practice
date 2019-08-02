@@ -845,6 +845,74 @@ const imgLoadAll = (arr,callback) => {
   }
 };
 
+/**
+ * @description ajax封装
+ * @param {object} 配置项
+ */
+const ajax = ({url = '',method = 'get',dataType = 'json',contentType = 'application/json;charset=UTF-8',data = null}) => {
+  const params_format = (params) => {
+    let _data = [];
+    Object.keys(params).forEach(key => {
+      _data.push(key + '=' + params[key])
+    });
+    return _data.join('&');
+  };
+  return new Promise((resolve, reject) => {
+    // 创建ajax对象
+    let xhr = new XMLHttpRequest();
+    if (method === 'get'){
+      let handleUrl;
+      if (url.indexOf('?') === -1){
+        // url里面没有参数
+        if (data){
+          // data里面有参数
+          handleUrl = url + "?" + params_format(data);
+        }else {
+          // data里面没有参数
+          handleUrl = url;
+        }
+      }else {
+        // url里面有参数
+        if (data){
+          // data里面有参数
+          handleUrl = url + "&" + params_format(data);
+        }else {
+          // data里面没有参数
+          handleUrl = url;
+        }
+      }
+      xhr.open(method, handleUrl, true);
+      xhr.send();
+    }else {
+      xhr.open(method, url, true);
+      xhr.setRequestHeader("Content-Type",contentType);
+      xhr.send(data);
+    }
+    // 监听状态
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && (xhr.status === 200 || xhr.status === 304)) {
+        switch(dataType){
+          case "json":
+            var json = JSON.parse(xhr.responseText);
+            resolve(json);
+            break;
+          case "xml":
+            resolve(xhr.responseXML);
+            break;
+          default:
+            resolve(xhr.responseText);
+            break;
+        }
+      }
+    };
+
+    xhr.onerror = function(err) {
+      reject(err);
+    }
+  });
+
+};
+
 export {
   trim,
   replaceStr,
@@ -871,6 +939,7 @@ export {
   browserType,
   priceToChinese,
   $,
-  imgLoadAll
+  imgLoadAll,
+  ajax
 }
 
