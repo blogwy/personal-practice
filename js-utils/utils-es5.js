@@ -942,6 +942,47 @@ var utils = {
     xhr.onerror = function(err) {
       opts.error(err);
     }
+  },
+
+  /**
+   * @description 图片懒加载
+   * @param {string} className 图片类名
+   * @param {number} num 图片出现到视口的距离开始加载图片
+   * @param {string} errorImg 图片出错时的占位图片
+   */
+  imageLazyLoad: function (className,num,errorImg) {
+    var imgArr = document.getElementsByClassName(className),_src = '';
+    for (var i=0,len = imgArr.length;i < len; i++){
+      if (document.documentElement.clientHeight + document.documentElement.scrollTop > imgArr[i].offsetTop - num && !imgArr[i].isLoad){
+        //记录图片是否已经加载
+        imgArr[i].isLoad = true;
+        //图片加载时候有一个图片透明度变化
+        imgArr[i].style.cssText = "transition: ''; opacity: 0;";
+        imgArr[i].style.transition = "";
+        imgArr[i].style.opacity = "0";
+        _src = imgArr[i].getAttribute("data-src");
+
+        // 图片加载
+        var oImg = new Image();
+        oImg.src = _src;
+        (function (){
+          var x = i;
+          oImg.onload = function () {
+            imgArr[x].src = _src;
+          };
+          // 图片错误处理
+          if (errorImg) {
+            oImg.onerror = function () {
+              imgArr[x].src = errorImg;
+            }
+          }
+          setTimeout(() => {
+            imgArr[x].style.cssText = "transition:all 1s; opacity: 1;";
+          }, 20);
+        })();
+      }
+    }
   }
+
 };
 
