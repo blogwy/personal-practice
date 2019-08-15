@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Title</title>
+  <style>
+    .picker-datetime-time{
+      width: 96px;
+      border: 1px solid #e4e7ed;
+      box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+      padding: 5px 10px;
+    }
+    .datetime-content{
+      display: flex;
+    }
+    .datetime-content-grounp{
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+    }
+    .datetime-content-item{
+      flex: none;
+      height: 35px;
+      line-height: 35px;
+      font-size: 14px;
+      color: #ccc;
+      cursor: pointer;
+      text-align: center;
+    }
+    .datetime-content-item-current{
+      border-top: 1px solid #409eff;
+      border-bottom: 1px solid #409eff;
+      color: #409eff;
+    }
+    .datetime-foot{
+      display: flex;
+      flex-direction: row-reverse;
+    }
+    .datetime-foot-btn{
+      padding: 5px 5px 5px 0px;
+      margin-left: 5px;
+      font-size: 13px;
+      color: #555;
+      background: #fff;
+      cursor: pointer;
+    }
+    .datetime-foot-btn.success{
+      color: #409eff;
+    }
+  </style>
+</head>
+<body>
+<div id="app" v-cloak>
+  <div class="picker-datetime-time">
+    <div class="datetime-content">
+      <div class="datetime-content-grounp">
+        <div :class="['datetime-content-item',item.current ? 'datetime-content-item-current' : '']"
+             v-for="(item,index) in dateHours" @click.stop="changeTime('Hours',item.text)">
+          {{item.text}}
+        </div>
+      </div>
+      <div class="datetime-content-grounp">
+        <div :class="['datetime-content-item',item.current ? 'datetime-content-item-current' : '']"
+             v-for="(item,index) in dateMinutes" @click.stop="changeTime('Minutes',item.text)">
+          {{item.text}}
+        </div>
+      </div>
+      <div class="datetime-content-grounp">
+        <div :class="['datetime-content-item',item.current ? 'datetime-content-item-current' : '']"
+             v-for="(item,index) in dateSeconds" @click.stop="changeTime('Seconds',item.text)">
+          {{item.text}}
+        </div>
+      </div>
+    </div>
+    <div class="datetime-foot">
+      <div class="datetime-foot-btn success">确定</div>
+      <div class="datetime-foot-btn">取消</div>
+    </div>
+  </div>
+</div>
+
+<script src="./js/vue.js"></script>
+<script>
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      dateHours: [
+        {
+          text: '',
+          current: false
+        },
+        {
+          text: '',
+          current: false
+        },
+        {
+          text: '00',
+          current: true
+        },
+        {
+          text: '01',
+          current: false
+        },
+        {
+          text: '02',
+          current: false
+        }
+      ],
+      dateMinutes: [
+        {
+          text: '',
+          current: false
+        },
+        {
+          text: '',
+          current: false
+        },
+        {
+          text: '00',
+          current: true
+        },
+        {
+          text: '01',
+          current: false
+        },
+        {
+          text: '02',
+          current: false
+        }
+      ],
+      dateSeconds: [
+        {
+          text: '',
+          current: false
+        },
+        {
+          text: '',
+          current: false
+        },
+        {
+          text: '00',
+          current: true
+        },
+        {
+          text: '01',
+          current: false
+        },
+        {
+          text: '02',
+          current: false
+        }
+      ]
+    },
+    methods: {
+      changeTime(type,time){
+        console.log(type,time);
+        let timeArray = [
+          {
+            text: '',
+            current: false
+          },
+          {
+            text: '',
+            current: false
+          },
+          {
+            text: '',
+            current: true
+          },
+          {
+            text: '',
+            current: false
+          },
+          {
+            text: '',
+            current: false
+          }
+        ];
+        let _time = parseInt(time);
+        let forArray = [-2,-1,0,1,2];
+        if (type === 'Hours'){
+          forArray.forEach(function (item,index) {
+            if ((_time + item) < 0){
+              timeArray[index].text = '';
+            }else if ((_time + item) >= 0 && (_time + item) < 10){
+              timeArray[index].text = '0' + (_time + item);
+            }else if ((_time + item) >= 10 && (_time + item) < 24){
+              timeArray[index].text = '' + (_time + item);
+            }
+          });
+          this.dateHours = timeArray;
+        }
+        if (type === 'Minutes'){
+          forArray.forEach(function (item,index) {
+            if ((_time + item) < 0){
+              timeArray[index].text = '';
+            }else if ((_time + item) >= 0 && (_time + item) < 10){
+              timeArray[index].text = '0' + (_time + item);
+            }else if ((_time + item) >= 10 && (_time + item) < 60){
+              timeArray[index].text = '' + (_time + item);
+            }
+          });
+          this.dateMinutes = timeArray;
+        }
+        if (type === 'Seconds'){
+          forArray.forEach(function (item,index) {
+            if ((_time + item) < 0){
+              timeArray[index].text = '';
+            }else if ((_time + item) >= 0 && (_time + item) < 10){
+              timeArray[index].text = '0' + (_time + item);
+            }else if ((_time + item) >= 10 && (_time + item) < 60){
+              timeArray[index].text = '' + (_time + item);
+            }
+          });
+          this.dateSeconds = timeArray;
+        }
+      }
+    }
+  })
+</script>
+</body>
+</html>

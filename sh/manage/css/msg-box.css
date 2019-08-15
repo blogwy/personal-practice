@@ -1,0 +1,123 @@
+.msg-box-modal{
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: rgba(0,0,0,.6);
+  z-index: 9998;
+}
+.msg-box {
+  position: fixed;
+  left:50%;
+  transform: translateX(-50%);
+  word-wrap:break-word;
+  z-index:9999;
+  font-size: 16px;
+  max-width:80%;
+  border-radius: 5px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.msg-box-title{
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+}
+.msg-box-title-content{
+  text-align: left;
+  font-size: 18px;
+  line-height: 1;
+  color: #303133;
+}
+.msg-box-title-icon{
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+.msg-box-title-icon img{
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.msg-box-content{
+  font-size: 14px;
+  padding: 0px 15px;
+  color: #606266;
+}
+.msg-box-action{
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px;
+}
+.msg-box-action-cancel{
+  width: 52px;
+  line-height: 2.2;
+  background: #fff;
+  border: 1px solid #dcdfe6;
+  color: #606266;
+  outline: none;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 13px;
+}
+.msg-box-action-cancel:hover{
+  color: #409eff;
+  border-color: #c6e2ff;
+  background-color: #ecf5ff;
+}
+.msg-box-action-confirm{
+  margin-left: 10px;
+  width: 52px;
+  line-height: 2.2;
+  color: #fff;
+  background-color: #409eff;
+  border: 1px solid #409eff;
+  outline: none;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 13px;
+}
+.msg-box-action-confirm:hover{
+  background: #66b1ff;
+  border-color: #66b1ff;
+  color: #fff;
+}
+
+.msgbox-fade-enter-active {
+  -webkit-animation: msgbox-fade-in .3s;
+  animation: msgbox-fade-in .3s
+}
+
+.msgbox-fade-leave-active {
+  -webkit-animation: msgbox-fade-out .3s;
+  animation: msgbox-fade-out .3s
+}
+
+
+@keyframes msgbox-fade-in {
+  0% {
+    transform: translate(-50%, -20px);
+    opacity: 0
+  }
+  100% {
+    transform: translate(-50%, 0);
+    opacity: 1
+  }
+}
+
+
+@keyframes msgbox-fade-out {
+  0% {
+    transform: translate(-50%, 0);
+    opacity: 1
+  }
+  100% {
+    transform: translate(-50%, -20px);
+    opacity: 0
+  }
+}

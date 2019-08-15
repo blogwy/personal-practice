@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1209031_6fwyyx1x1kc.css">
+  <link rel="stylesheet" href="./css/side-bar.css">
+  <link rel="stylesheet" href="./css/date-picker.css">
+  <link rel="stylesheet" href="./css/nav-bar.css">
+  <link rel="stylesheet" href="./css/alert.css">
+  <link rel="stylesheet" href="./css/page.css">
+  <title>主页</title>
+  <style>
+    /* 竖屏情况下 */
+    @media screen and (orientation:portrait) {
+      html,body{
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        user-select: none;
+      }
+      #app{
+        height: 100%;
+      }
+      [v-cloak] {
+        display: none;
+      }
+    
+    }
+    
+    /* 横屏情况下 */
+    @media screen and (orientation:landscape) {
+      html,body{
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        user-select: none;
+      }
+      #app{
+        height: 100%;
+      }
+      [v-cloak] {
+        display: none;
+      }
+    }
+    
+  </style>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <side-bar
+        @sidebar-status="getSidebarStatus"
+        @current-menu="getCurrentMenu"
+        :second-index="secondIndex"
+        :third-index="thirdIndex"></side-bar>
+    <nav-bar
+        :menu-first="menuFirst"
+        :menu-second="menuSecond"
+        :sidebar-status-props="sidebarStatusProps"></nav-bar>
+    <div class="print-div" style="margin: 50px 0px 0px 180px">
+      <iframe class="print-iframe" ref="printIframe" frameborder="0" scrolling="no" style="margin: 0px;padding: 0px;width: 0px;height: 0px;"></iframe>
+      <div class="print-odiv" ref="odiv" style="display: none">
+        <div class="print-item" v-for="(item,index) in printInfo" style="width: 377px;height: 378px;position: relative;box-sizing: border-box">
+          <div class="print-item-header" style="position: absolute;top: 25px; left: 5px;">
+            <div class="header-title" style="font-size: 18px;font-weight: 800">测试信息</div>
+            <div class="header-time" style="font-size: 12px;font-weight: 600">{{ item.time }}</div>
+          </div>
+          <div class="header-barcode" style="position: absolute;top: 10px; right: 10px;">
+            <img :src="item.barCodeData | creatBarCode"/>
+          </div>
+          <div class="print-item-hr-1" style="position: absolute;top: 70px; left: 5px;width: 365px;height: 1px;border: none;border-top: 1px solid #555"></div>
+          <div class="print-item-content" style="width:365px;position: absolute;top: 73px; left: 5px;font-size: 13px;display: flex;justify-content: center;align-items: center;flex-wrap: wrap;">
+            <div class="content-tips" style="box-sizing: border-box;flex: none;width: 50%;line-height: 2">测试编码：<span style="font-weight: 600">{{ item.sapNo }}</span></div>
+            <div class="content-tips" style="box-sizing: border-box;flex: none;width: 50%;line-height: 2">测试名称：<span style="font-weight: 600">{{ item.mName }}</span></div>
+            <div class="content-tips" style="box-sizing: border-box;flex: none;width: 50%;line-height: 2">测试日期：<span style="font-weight: 600">{{ item.sDate }}</span></div>
+            <div class="content-tips" style="box-sizing: border-box;flex: none;width: 50%;line-height: 2">测试一项：<span style="font-weight: 600">{{ item.bDate }}</span></div>
+            <div class="content-tips" style="box-sizing: border-box;flex: none;width: 50%;line-height: 2">测试二项：<span style="font-weight: 600">{{ item.spec }}</span></div>
+            <div class="content-tips" style="box-sizing: border-box;flex: none;width: 50%;line-height: 2">测试三项：<span style="font-weight: 600">{{ item.gys }}</span></div>
+            <div class="content-tips" style="box-sizing: border-box;flex: none;width: 50%;line-height: 2">测试四项：<span style="font-weight: 600">{{ item.cctj }}</span></div>
+            <div class="content-tips" style="box-sizing: border-box;flex: none;width: 50%;line-height: 2">测试五项：<span style="font-weight: 600">{{ item.dkc }}</span> kg</div>
+            <div class="content-tips" style="box-sizing: border-box;flex: none;width: 50%;line-height: 2">测试六项：<span style="font-weight: 600">{{ item.dq }}</span> 天</div>
+            <div class="content-tips" style="box-sizing: border-box;flex: none;width: 50%;line-height: 2">测试七项：<span style="font-weight: 600">{{ item.is }}</span></div>
+            <div class="content-tips" style="box-sizing: border-box;flex: none;width: 100%;line-height:2">测试八项：<span style="font-weight: 600">{{ item.gmy }}</span></div>
+          </div>
+          <div class="print-item-hr-2" style="position: absolute;top: 235px; left: 5px;width: 365px;height: 1px;border: none;border-top: 1px solid #555"></div>
+          <div class="content-qrcode" style="position: absolute;top: 252px; left: 66%;">
+            <img :src="item.qrCodeData | creatQrCode"/>
+          </div>
+        </div>
+      </div>
+      <date-picker
+          mode="datetime"
+          format="YYYY年MM月DD日 HH点mm分SS秒"
+          @change="getDate"></date-picker>
+      <date-picker
+          mode="date"
+          :max-time="1566286562000"
+          :picker-width="155"
+          format="YYYY年MM月DD日"
+          @change="getDate"></date-picker>
+      <date-picker
+          mode="month"
+          format="YYYY年MM月"
+          :min-time="1555745762000"
+          :max-time="1660980962000"
+          @change="getDate"></date-picker>
+      <date-picker
+          mode="year"
+          format="YYYY年"
+          :min-time="261905762000"
+          :max-time="3386129762000"
+          @change="getDate"></date-picker>
+      <button @click="printpage('odiv')">打印</button>
+      <!--<pagination :c-page="hcPage" :count="hcount" :page-size="hpageSize" :p-pages="hpPages" @change="getPages"></pagination>-->
+    </div>
+  </div>
+<script src="./js/vue.js"></script>
+<script src="./js/side-bar.js"></script>
+<script src="./js/date-picker.js"></script>
+<script src="./js/nav-bar.js"></script>
+<script src="./js/axios.js"></script>
+<script src="./js/common.js"></script>
+<script src="./js/alert.js"></script>
+<script src="./js/page.js"></script>
+<script src="./js/generate/qrcode.js"></script>
+<script src="./js/generate/JsBarcode.all.js"></script>
+<script src="./js/homepage.js"></script>
+</body>
+</html>

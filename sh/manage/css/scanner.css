@@ -1,0 +1,84 @@
+#scanner {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+.model{
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  z-index: 88;
+  border-top: calc((100vh - 60vw)/2) solid rgba(0,0,0,.2);
+  border-bottom: calc((100vh - 60vw)/2) solid rgba(0,0,0,.2);
+  border-right: 20vw solid rgba(0,0,0,.2);
+  border-left: 20vw solid rgba(0,0,0,.2);
+}
+.scanner-view{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border: 1px solid rgba(255,255,255,.3);
+  z-index: 89;
+}
+.scanner-line{
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: #49FF46;
+  border-radius: 20px;
+  z-index: 90;
+  animation: myScan 1s infinite alternate;
+}
+@keyframes  myScan{
+  from {
+    top: 0;
+  }
+  to {
+    top: 60vw;
+  }
+}
+.scanner-view-arrow{
+  position: absolute;
+  width: 5vw;
+  height: 5vw;
+  border: 2px solid #09bb07;
+}
+.scanner-view-arrow.arrow1{
+  top: -1px;
+  left: 0px;
+  z-index: 99;
+  border-right: none;
+  border-bottom: none;
+}
+.scanner-view-arrow.arrow2{
+  top: -1px;
+  right: 0px;
+  z-index: 99;
+  border-left: none;
+  border-bottom: none;
+}
+.scanner-view-arrow.arrow3{
+  bottom: -1px;
+  left: 0px;
+  z-index: 99;
+  border-right: none;
+  border-top: none;
+}
+.scanner-view-arrow.arrow4{
+  bottom: -1px;
+  right: 0px;
+  z-index: 99;
+  border-left: none;
+  border-top: none;
+}
+.video-view{
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  top: 0px;
+  left: 0px;
+  z-index: 80;
+}

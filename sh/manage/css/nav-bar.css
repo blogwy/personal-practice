@@ -1,0 +1,144 @@
+*, :after, :before {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+}
+ul{
+  list-style: none;
+  margin:0;
+  padding:0;
+}
+.nav-container{
+  margin-left: 180px;
+  height: 50px;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 2000;
+  transition: margin-left .3s;
+}
+.right-width{
+  margin-left: 56px;
+}
+.navbar{
+  height: 50px;
+  /*overflow: hidden;*/
+  position: relative;
+  background: #fff;
+  -webkit-box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  -moz-box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+}
+.navbar-breadcrumb-container{
+  float: left;
+  font-size: 14px;
+  line-height: 50px;
+  margin: 0 20px;
+}
+.navbar-breadcrumb_item {
+  float: left;
+}
+.navbar-breadcrumb_separator{
+  color: #c0c4cc;
+  font-weight: 700;
+  margin: 0 9px;
+}
+
+.navbar .navbar-user{
+  cursor: pointer;
+  float: right;
+  height: 100%;
+  line-height: 65px;
+  position: relative;
+}
+.navbar .navbar-user-img{
+  width: 25px;
+  margin-right: 30px;
+}
+.navbar-user:hover > .navbar-user-list{
+  display: block;
+}
+.navbar .navbar-user-list{
+  display: none;
+  list-style: none;
+  background: #fff;
+  border: 1px solid rgba(27,31,35,.15);
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 3px 12px rgba(27,31,35,.15);
+  -moz-box-shadow: 0 3px 12px rgba(27,31,35,.15);
+  box-shadow: 0 3px 12px rgba(27,31,35,.15);
+  padding: 2px 0;
+  position: absolute;
+  top: 50px;
+  right: 25px;
+  /*z-index: ;*/
+}
+.navbar .navbar-user-list ul li{
+  position: static;
+  float: none;
+  margin: 0;
+  padding: 0;
+  display: inline;
+}
+.navbar .navbar-user-list ul li a{
+  white-space: nowrap;
+  min-width: 50px;
+  padding: 10px 15px;
+  line-height: 1em;
+  font-size: 14px;
+  color: #606266;
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+  text-align: left;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+.navbar .navbar-user-list ul li a:hover{
+  background-color:  #e8f4ff;
+  color: #66b1ff;
+
+}
+.navbar .navbar-user-list .line{
+  border-bottom: 1px solid #d9d9d9;;
+  display: block;
+  margin: 0 -2px;
+  padding: 0;
+  height: 2px;
+  position: relative;
+  top:-1px;
+}
+.navbar .navbar-user-arrow{
+  position: absolute;
+  overflow: hidden;
+  left: auto;
+  right: 5px;
+  top: -15px;
+}
+.navbar .navbar-user-arrow i,.navbar-user-arrow em{
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-width: 7px;
+  border-style: solid;
+  overflow: hidden;
+  font-size: 0;
+  line-height: 0;
+  vertical-align: top;
+}
+.navbar .navbar-user-arrow i{
+  border-color: #ccc;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-left-color: transparent;
+}
+.navbar .navbar-user-arrow em{
+  border-color: #fff;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  margin: 1px 0 0 -19px;
+}

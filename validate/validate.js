@@ -8,7 +8,9 @@ let WyValidate = {};
 WyValidate.install = (Vue, options = { directiveName: 'wyValidate' }) => {
 
   Vue.directive(options.directiveName,{
-    bind(el, binding, vnode){
+    inserted(el, binding, vnode){
+      console.log(el.value);
+      
       if (handle.isCheck(el.type)){
         switch (binding.value.type){
           case 0:

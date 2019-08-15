@@ -1,0 +1,45 @@
+.print-iframe{
+  margin: 0px;
+  padding: 0px;
+  width: 0px;
+  height: 0px;
+}
+.print-odiv{
+  display: none
+}
+.print-item{
+  width: 377px;height: 378px;position: relative;box-sizing: border-box;
+}
+.print-item-header{
+  position: absolute;top: 25px; left: 5px;
+}
+.header-title{
+  font-size: 18px;font-weight: 800
+}
+.header-time{
+  font-size: 12px;font-weight: 600
+}
+.header-barcode{
+  position: absolute;top: 10px; right: 10px;
+}
+.print-item-hr-1{
+  position: absolute;top: 70px; left: 5px;width: 365px;height: 1px;border: none;border-top: 1px solid #555;
+}
+.print-item-content{
+  width:365px;position: absolute;top: 73px; left: 5px;font-size: 13px;display: flex;justify-content: center;align-items: center;flex-wrap: wrap;
+}
+.content-tips{
+  box-sizing: border-box;flex: none;width: 50%;line-height: 2
+}
+.content-tips span{
+  font-weight: 600
+}
+.content-tips:last-child{
+  box-sizing: border-box;flex: none;width: 100%;line-height:2
+}
+.print-item-hr-2{
+  position: absolute;top: 235px; left: 5px;width: 365px;height: 1px;border: none;border-top: 1px solid #555
+}
+.content-qrcode{
+  position: absolute;top: 252px; left: 66%;
+}

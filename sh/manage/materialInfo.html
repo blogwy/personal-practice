@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1209031_6fwyyx1x1kc.css">
+  <link rel="stylesheet" href="./css/side-bar.css">
+  <link rel="stylesheet" href="./css/date-picker.css">
+  <link rel="stylesheet" href="./css/nav-bar.css">
+  <link rel="stylesheet" href="./css/alert.css">
+  <link rel="stylesheet" href="./css/msg-box.css">
+  <link rel="stylesheet" href="./css/materialInfo.css">
+  <title>原料管理</title>
+</head>
+<body>
+<div id="app" v-cloak>
+  <side-bar @sidebar-status="getSidebarStatus"
+            @current-menu="getCurrentMenu"
+            :second-index="secondIndex"
+            :third-index="thirdIndex"></side-bar>
+  <nav-bar
+      :menu-first="menuFirst"
+      :menu-second="menuSecond"
+      :sidebar-status-props="sidebarStatus"></nav-bar>
+  <div :class="['main-container',{'right-width' : !sidebarStatus}]">
+    <div class="tab">
+      <ul class="tab-nav" style="list-style: none">
+        <li @click="currentTab = 0" :class="[{'active' : currentTab == 0}]"><a>原材料</a></li>
+        <li @click="currentTab = 1" :class="[{'active' : currentTab == 1}]"><a>供应商</a></li>
+      </ul>
+      <div class="tab-content">
+        <!-- 原材料 -->
+        <div v-show="currentTab == 0" id="tab_1" class="tab-content-div">
+          <div>
+            <button class="btn btn-primary" @click="openAddMaterialModel" style="position: relative;z-index: 1000">新增</button>
+          </div>
+          <!--添加原料-->
+          <msg-box
+              :box-visible="materialBoxVisible"
+              box-title="添加原料"
+              box-top="3%"
+              confirm-text="添加"
+              @confirm="materialBoxConfirm"
+              @cancel="materialBoxVisible = false"
+              class="tad-material-alert">
+            <div class="tab-table">
+              <div class="tab-table-left">
+                <div class="tab-form-group">
+                  <label>SAP码</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-input">
+                      <input type="text" v-model="addMaterialData.sapNo" autocomplete="off"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-form-group">
+                  <label>原料名称</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-input">
+                      <input type="text" v-model="addMaterialData.materialName" autocomplete="off"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-form-group">
+                  <label>包装类型</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-select">
+                      <select v-model="addMaterialData.packaging">
+                        <option value="散装">散装</option>
+                        <option value="袋装">袋装</option>
+                        <option value="箱装">箱装</option>
+                        <option value="桶装">桶装</option>
+                      </select>
+                      <span>
+                        <i class="iconfont icon54 icon-arrow"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-form-group">
+                  <label>包装规格</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-input">
+                      <input type="text" v-model="addMaterialData.spec" autocomplete="off"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-form-group">
+                  <label>保质期</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-input">
+                      <input type="text" v-model="addMaterialData.expirePeriod" autocomplete="off"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-form-group">
+                  <label>保质期单位</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-select">
+                      <select v-model="addMaterialData.expireUnit">
+                        <option value ="天">天</option>
+                        <option value ="月">月</option>
+                      </select>
+                      <span>
+                        <i class="iconfont icon54 icon-arrow"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-table-right">
+                <div class="tab-form-group">
+                  <label>存储条件</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-select">
+                      <select v-model="addMaterialData.storage">
+                        <option value ="常温">常温</option>
+                        <option value ="冷藏">冷藏</option>
+                        <option value ="冬季常温-夏季冷藏">冬季常温-夏季冷藏</option>
+                        <!--<option value ="夏季冷藏">夏季冷藏</option>-->
+                      </select>
+                      <span>
+                        <i class="iconfont icon54 icon-arrow"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-form-group">
+                  <label>是否为过敏原</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-select">
+                      <select v-model="addMaterialData.isAllergen">
+                        <option value ="1">是</option>
+                        <option value ="0">否</option>
+                      </select>
+                      <span>
+                        <i class="iconfont icon54 icon-arrow"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-form-group">
+                  <label>过敏原的描述</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-input">
+                      <input type="text" v-model="addMaterialData.allergenDesp" autocomplete="off"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-form-group">
+                  <label>低库存提醒量</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-input">
+                      <input type="text" v-model="addMaterialData.lowstorageLimit" autocomplete="off"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-form-group">
+                  <label>到期提醒日期</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-input">
+                      <input type="text" v-model="addMaterialData.peroidLimit" autocomplete="off"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+            </div>
+          </msg-box>
+          <!--绑定供应商-->
+          <msg-box
+              :box-visible="supplierBindBoxVisible"
+              :box-title="materialNameBind"
+              box-top="3%"
+              confirm-text="关闭"
+              @confirm="supplierBindBoxVisible = false"
+              @cancel="supplierBindBoxVisible = false"
+              class="tad-material-alert">
+            <div id="supplierChoose">
+              <div class="tab-table">
+                <div class="tab-form-group">
+                  <label>供应商</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-select">
+                      <select v-model="supplierId">
+                        <option v-for="item in supplierList" :value="item.id">{{item.supplierName}}</option>
+                      </select>
+                      <span>
+                        <i class="iconfont icon54 icon-arrow"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-form-group">
+                  <label>包装</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-select">
+                      <select v-model="packagingBind">
+                        <option value="散装">散装</option>
+                        <option value="袋装">袋装</option>
+                        <option value="箱装">箱装</option>
+                        <option value="桶装">桶装</option>
+                      </select>
+                      <span>
+                        <i class="iconfont icon54 icon-arrow"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-form-group">
+                  <label>规格</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-input">
+                      <input type="text" v-model="specBind" autocomplete="off"/>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn btn-primary" @click="addBindSupplier" style="height: 100%;">添加</button>
+              </div>
+              <table>
+                <thead>
+                <tr>
+                  <th>供应商id</th>
+                  <th>供应商名称</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(item,index) in bindSupplierList">
+                  <td>{{ index+1 }}</td>
+                  <td>{{ item.supplierName }}</td>
+                  <td>
+                    <button class="btn btn-danger" @click="delBindSupplier(item.id)">删除</button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </msg-box>
+          
+          <!--编辑原料-->
+          <msg-box
+              :box-visible="editMaterialBoxVisible"
+              box-title="编辑原料"
+              box-top="3%"
+              confirm-text="提交"
+              @confirm="editMaterialBoxConfirm"
+              @cancel="editMaterialBoxVisible = false"
+              class="tad-material-alert">
+            <div class="tab-table">
+              <div class="tab-table-left">
+                <div class="tab-form-group">
+                  <label>SAP码</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-input">
+                      <input type="text" v-model="currentMaterial.sapNo" autocomplete="off"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-form-group">
+                  <label>原料名称</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-input">
+                      <input type="text" v-model="currentMaterial.materialName" autocomplete="off"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-form-group">
+                  <label>包装类型</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-select">
+                      <select v-model="currentMaterial.packaging">
+                        <option value="散装">散装</option>
+                        <option value="袋装">袋装</option>
+                        <option value="箱装">箱装</option>
+                        <option value="桶装">桶装</option>
+                      </select>
+                      <span>
+                        <i class="iconfont icon54 icon-arrow"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-form-group">
+                  <label>包装规格</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-input">
+                      <input type="text" v-model="currentMaterial.spec" autocomplete="off"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-form-group">
+                  <label>保质期</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-input">
+                      <input type="text" v-model="currentMaterial.expirePeriod" autocomplete="off"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-form-group">
+                  <label>保质期单位</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-select">
+                      <select v-model="currentMaterial.expireUnit">
+                        <option value ="天">天</option>
+                        <option value ="月">月</option>
+                      </select>
+                      <span>
+                        <i class="iconfont icon54 icon-arrow"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-table-right">
+                <div class="tab-form-group">
+                  <label>存储条件</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-select">
+                      <select v-model="currentMaterial.storage">
+                        <option value ="常温">常温</option>
+                        <option value ="冷藏">冷藏</option>
+                        <option value ="冬季常温-夏季冷藏">冬季常温-夏季冷藏</option>
+                        <!--<option value ="夏季冷藏">夏季冷藏</option>-->
+                      </select>
+                      <span>
+                        <i class="iconfont icon54 icon-arrow"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-form-group">
+                  <label>是否为过敏原</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-select">
+                      <select v-model="currentMaterial.isAllergen">
+                        <option value ="1">是</option>
+                        <option value ="0">否</option>
+                      </select>
+                      <span>
+                        <i class="iconfont icon54 icon-arrow"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-form-group">
+                  <label>过敏原的描述</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-input">
+                      <input type="text" v-model="currentMaterial.allergenDesp" autocomplete="off"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-form-group">
+                  <label>低库存提醒量</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-input">
+                      <input type="text" v-model="currentMaterial.lowstorageLimit" autocomplete="off"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-form-group">
+                  <label>到期提醒日期</label>
+                  <div class="tab-fg-item">
+                    <div class="tab-fg-input">
+                      <input type="text" v-model="currentMaterial.peroidLimit" autocomplete="off"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+            </div>
+          </msg-box>
+          <table>
+            <thead>
+            <th width="8%">SAP编号</th>
+            <th width="10%">原料名称</th>
+            <th width="6%">包装</th>
+            <th width="6%">规格</th>
+            <th width="6%">保质期</th>
+            <th width="13%" colspan="2">储存条件</th>
+            <th width="6%">是否为过敏原</th>
+            <th width="10%">含有何种过敏原</th>
+            <th width="6%">低库存提醒量</th>
+            <th width="6%">到期提醒期限(天)</th>
+            <th width="20%">操作</th>
+            </thead>
+            <tbody>
+            <tr v-for="(item,index) in materialList">
+              <td>{{item.sapNo}}</td>
+              <td>{{item.materialName}}</td>
+              <td>{{item.packaging}}</td>
+              <td>{{!item.spec ? '': item.spec + '公斤'}}</td>
+              <td>{{item.expirePeriod}}{{item.expireUnit}}</td>
+              <!--<td></td>-->
+              <td width="5%">{{item.storage | handleStorage1}}</td>
+              <td width="5%">{{item.storage | handleStorage2}}</td>
+              <td>{{item.isAllergen === 0 ? '否':'是'}}</td>
+              <td>{{item.allergenDesp}}</td>
+              <td>{{item.lowstorageLimit}}</td>
+              <td>{{item.peroidLimit}}</td>
+              <td>
+                <button class="btn btn-success" @click="openBindSupplier(index)">选择供应商</button>
+                <button class="btn btn-primary" @click="editMaterial(index)">编辑</button>
+                <button class="btn btn-danger" @click="delMaterial(item.id)">删除</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- 供应商列表 -->
+        <div v-show="currentTab == 1" id="tab_2">
+          <div>
+            <button class="btn btn-primary" @click="openAddSupplierModel" style="position: relative;z-index: 1000">新增</button>
+          </div>
+          <!--增加-->
+          <msg-box
+              :box-visible="supplierBoxVisible"
+              box-title="添加供应商"
+              confirm-text="添加"
+              @confirm="boxConfirm"
+              @cancel="supplierBoxVisible = false">
+            <div style="display: flex;justify-content: center">
+              <div class="tab-form-group">
+                <label>供应商名称</label>
+                <div class="tab-fg-item">
+                  <div class="tab-fg-input">
+                    <!--<input type="text" v-model="supplierName" />-->
+                    <input type="text" v-model="supplierName" name="supplierName" v-validate="rules1" />
+                    <span v-show="wyError.supplierName ? wyError.supplierName.showMessage : false">{{wyError.supplierName ? wyError.supplierName.message : ''}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </msg-box>
+          
+          <table>
+            <thead>
+            <th>供应商id</th>
+            <th>供应商名称</th>
+            <th>操作</th>
+            </thead>
+            <tbody>
+            <tr v-for="(item,index) in supplierList">
+              <td>{{index+1}}</td>
+              <td>{{item.supplierName}}</td>
+              <td>
+                <button class="btn btn-danger" @click="delSupplier(item.id)">删除</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="./js/vue.js"></script>
+<script src="./js/validate.js"></script>
+<script src="./js/side-bar.js"></script>
+<script src="./js/date-picker.js"></script>
+<script src="./js/nav-bar.js"></script>
+<script src="./js/alert.js"></script>
+<script src="./js/msg-box.js"></script>
+<script src="./js/axios.js"></script>
+<script src="./js/common.js"></script>
+<script src="./js/materialInfo.js"></script>
+</body>
+</html>

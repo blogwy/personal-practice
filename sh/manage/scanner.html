@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./css/scanner.css">
+  <style>
+    /* 竖屏情况下 */
+    @media screen and (orientation:portrait) {
+      html,body{
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        user-select: none;
+      }
+      [v-cloak] {
+        display: none;
+      }
+      
+    }
+
+    /* 横屏情况下 */
+    @media screen and (orientation:landscape) {
+      html,body{
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        user-select: none;
+      }
+      [v-cloak] {
+        display: none;
+      }
+    }
+  </style>
+  <title>Title</title>
+</head>
+<body>
+<div id="app" v-cloak>
+  <vue-scanner @ondata="getData"></vue-scanner>
+  
+</div>
+
+<script src="./js/vue.js"></script>
+<script src="https://cdn.bootcss.com/vConsole/3.3.2/vconsole.min.js"></script>
+<script src="./js/scan/jsQR.js"></script>
+<script src="./js/scan/quagga.min.js"></script>
+<script src="./js/scanner.js"></script>
+<script>
+  var vm = new Vue({
+    el: '#app',
+    data: {},
+    filters: {},
+    methods:{
+      getData(res){
+        alert(res);
+      }
+    },
+    mounted(){
+    
+    }
+  });
+</script>
+</body>
+</html>

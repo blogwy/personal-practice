@@ -1,0 +1,17 @@
+{
+  "rstCode": "0",
+  "data": [
+    {
+      "id": 1,
+      "supplierName": "供应商1"
+    },
+    {
+      "id": 2,
+      "supplierName": "供应商2"
+    },
+    {
+      "id": 3,
+      "supplierName": "供应商3"
+    }
+  ]
+}
