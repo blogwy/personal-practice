@@ -176,9 +176,8 @@ let utils = {
     }
   },
   addHtmlNode(text,className,el){
-    if (el.parentNode.childNodes[1]){
-      el.parentNode.removeChild(el.parentNode.childNodes[1]);
-    }
+    // 先删除再创建
+    utils.delHtmlNode(el);
     let node = document.createElement("span");
     let textNode = document.createTextNode(text);
     node.classList.add(className);
@@ -186,9 +185,12 @@ let utils = {
     el.parentNode.appendChild(node);
   },
   delHtmlNode(el){
-    if (el.parentNode.childNodes[1]){
-      el.parentNode.removeChild(el.parentNode.childNodes[1]);
-    }
+    let childs = el.parentNode.childNodes;
+    childs.forEach((item,index) => {
+      if (item.nodeName !== '#text' && item.classList.contains('is-error-span')){
+        el.parentNode.removeChild(el.parentNode.childNodes[index]);
+      }
+    });
   },
   events: ['blur','input']
 };
