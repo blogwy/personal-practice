@@ -982,7 +982,115 @@ var utils = {
         })();
       }
     }
+  },
+  /**
+   * @description 获取元素上边框距离浏览器窗口上方的距离
+   * @method getOffsetTop
+   * @param {element} ele dom节点
+   * @return {Number} 距离
+   */
+  getOffsetTop: function (ele) {
+    let tmp = ele.offsetTop;
+    let node= ele.offsetParent;
+    while(node!= null){
+      tmp += node.offsetTop;
+      node= node.offsetParent;
+    }
+    return tmp;
+  },
+  /**
+   * @description 获取元素左边框距离浏览器窗口左边的距离
+   * @method getOffsetLeft
+   * @param {element} ele dom节点
+   * @return {Number} 距离
+   */
+  getOffsetLeft: function (ele) {
+    let tmp = ele.offsetLeft;
+    let node= ele.offsetParent;
+    while(node!= null){
+      tmp += node.offsetLeft;
+      node= node.offsetParent;
+    }
+    return tmp;
+  },
+  /**
+   * @description 检测设备横屏竖屏变化(回调函数)
+   * @method getDirectionChange
+   * @return {String} landscape是横屏 portrait是竖屏
+   */
+  getOrientationChange: function (callback) {
+    let supportOrientation = (typeof window.orientation === 'number' &&
+        typeof window.onorientationchange === 'object');
+    let updateOrientation = () => {
+      let orientation;
+      if (supportOrientation){
+        orientation = window.orientation;
+        switch(orientation){
+          case 90:
+          case -90:
+            orientation = 'landscape';
+            break;
+          default:
+            orientation = 'portrait';
+            break;
+        }
+        callback(orientation);
+      }else {
+        orientation = (window.innerWidth > window.innerHeight) ? 'landscape' : 'portrait';
+        callback(orientation);
+      }
+    };
+    if (supportOrientation){
+      // 监听屏幕转动
+      window.addEventListener('orientationchange',updateOrientation,false);
+    }else {
+      //监听resize事件
+      window.addEventListener('resize',updateOrientation,false);
+    }
+    // updateOrientation();
+  },
+  /**
+   * @description 获取当前屏幕朝向
+   * @method getDirection
+   * @return {String} landscape是横屏 portrait是竖屏
+   */
+  getOrientation: function () {
+    let supportOrientation = (typeof window.orientation === 'number' &&
+        typeof window.onorientationchange === 'object'),orientation;
+    if (supportOrientation){
+      orientation = window.orientation;
+      switch(orientation){
+        case 90:
+        case -90:
+          orientation = 'landscape';
+          return orientation;
+        default:
+          orientation = 'portrait';
+          return orientation;
+      }
+    }else {
+      orientation = (window.innerWidth > window.innerHeight) ? 'landscape' : 'portrait';
+      return orientation;
+    }
+  },
+  /**
+   * @description 函数节流
+   * @method throttle
+   * @param fn 业务代码函数
+   * @param delay 时间
+   */
+  throttle(fn, delay) {
+    let startTime = 0;
+    return function () {
+      // 如果有参数，把参数赋值给业务函数，+new Date()把时间转成Number类型
+      let _this = this, args = arguments, curTime = +new Date();
+      // 如果当前时间-触发时间大于等于的间隔时间（delay），触发一次函数运行函数
+      if (curTime - startTime >= delay) {
+        fn.apply(_this, args);
+        // 把当前时间赋值给开始时间，以便下一次调用时比对
+        startTime = curTime;
+      }
+    };
   }
-
 };
 
