@@ -1091,6 +1091,20 @@ var utils = {
         startTime = curTime;
       }
     };
+  },
+	/**
+   * @description 函数防抖
+   * @method debounce
+   * @param fn 业务代码函数
+   * @param delay 延迟执行的时间
+   */
+  debounce(fn, delay){
+    return function () {
+      clearTimeout(fn.id);
+      fn.id = setTimeout(() => {
+        fn.call(this, arguments)
+      }, delay);
+    }
   }
 };
 
