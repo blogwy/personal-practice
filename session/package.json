@@ -16,6 +16,6 @@
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "jquery": "^3.2.1",
-    "mongoose": "^4.13.4"
+    "mongoose": "^5.7.7"
   }
 }
